@@ -1,13 +1,101 @@
 <!DOCTYPE html>
-<html onselect="return false">
+<!--heml start version **.**-->
+<html>
+  <!--ead start-->
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8" content="IE=edge,chrome=1" />
     <title>若愚</title>
     <meta name="keywords" content="若愚" />
-    <link rel="stylesheet" type="text/css" href="./src/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="./src/style/base.css" />
+    <link rel="stylesheet" type="text/css" href="./src/style/scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="./src/style/pulse.css" />
+    <link rel="stylesheet" type="text/css" href="./src/style/indexbar.css" />
+    <base target="_self" />
   </head>
-
-  <body>
-    HELLO WORLD
+  <!--head end-->
+  <!--body start-->
+  <body
+    style="overflow: scroll; overflow-x: hidden"
+    oncontextmenu="return false"
+    ondragstart="return false"
+    onselectstart="return false"
+    onselect="document.selection.empty()"
+    oncopy="document.selection.empty()"
+    onbeforecopy="return false"
+  >
+    <!--blackhole start-->
+    <div class="header" id="header">
+      <!--Galaxy start-->
+      <canvas id="galaxy" style="z-index: 0"></canvas>
+      <!--Galaxy end-->
+      <div class="core" id="core" onClick="">
+        <div
+          class="pulse"
+          style="
+            animation-delay: 0.3s;
+            -webkit-animation-delay: 0.3s;
+            -moz-animation-delay: 0.3s;
+            -ms-animation-delay: 0.3s;
+            -o-animation-delay: 0.3s;
+          "
+        ></div>
+        <div
+          class="pulse"
+          style="
+            animation-delay: 1.2s;
+            -webkit-animation-delay: 1.2s;
+            -moz-animation-delay: 1.2s;
+            -ms-animation-delay: 1.2s;
+            -o-animation-delay: 1.2s;
+          "
+        ></div>
+        <div
+          class="pulse"
+          style="
+            animation-delay: 2.1s;
+            -webkit-animation-delay: 2.1s;
+            -moz-animation-delay: 2.1s;
+            -ms-animation-delay: 2.1s;
+            -o-animation-delay: 2.1s;
+          "
+        ></div>
+      </div>
+    </div>
+    <!--blackhole end-->
+    <!--indexbar start-->
+    <div class="indexbar" id="indexbar">
+      <button id="search_btn" type="submit"></button>
+      <input id="search_ipt" type="text" placeholder="搜索" />
+      <a href="javascript:" onClick="">@</a>
+      <a href="javascript:" onClick="">@</a>
+    </div>
+    <!--indexbar end-->
+    <!--major start-->
+    <div class="major">
+      <div class="left" id="left">
+        <h2>若</h2>
+        <div class="pic"></div>
+        <p>艸若以右</p>
+      </div>
+      <div class="center" id="center"></div>
+      <div class="right" id="right">
+        <h2>愚</h2>
+        <div class="pic"></div>
+        <p>心负如禺</p>
+      </div>
+    </div>
+    <!--major end-->
+    <!--footer start-->
+    <div class="footer" id="footer" title="">
+      &copy;2022&nbsp;&nbsp;&#64;this&nbsp;<i>.DESIGN,&nbsp;.CODE</i>
+    </div>
+    <!--footer end-->
   </body>
+  <!--body end-->
+  <!--script start-->
+  <script type="text/javascript" src="./src/policy/command.js"></script>
+  <script type="text/javascript" src="./src/policy/galaxy.js"></script>
+  <script type="text/javascript" src="./src/policy/base.js"></script>
+  <!--script end-->
 </html>
+<!--html end-->

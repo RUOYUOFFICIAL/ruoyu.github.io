@@ -1,0 +1,89 @@
+input,
+button {
+    border: none;
+    outline: none;
+}
+
+
+/* 导航条 */
+
+.indexbar {
+    position: relative;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    /*
+    100vw是相对于屏幕，不排除滚动条
+    100%是相对于内容，排除滚动条
+    */
+    width: 100%;
+    height: 8vh;
+    overflow: hidden;
+    background-color: #332233;
+    opacity: .9;
+}
+
+
+/* 导航条链接 */
+
+.indexbar a {
+    float: left;
+    width: 16%;
+    height: 6vh;
+    margin: 1vh;
+    border-radius: 3vh;
+    font-size: 3vmin;
+    line-height: 6vh;
+    font-weight: 500;
+    background-color: lightsteelblue;
+    color: black;
+    transition: .4s;
+    -webkit-transition: .4s;
+    -moz-transition: .4s;
+    -ms-transition: .4s;
+}
+
+
+/* 链接过渡 */
+
+.indexbar a:hover {
+    width: 20%;
+}
+
+
+/*搜索框*/
+
+.indexbar input {
+    float: right;
+    width: 16%;
+    height: 6vh;
+    margin: 1vh;
+    padding: 0 3vh;
+    border-radius: 3vh;
+    font-size: 3vh;
+    color: #332233;
+    background-color: lightsteelblue;
+    transition: .2s;
+    -webkit-transition: .2s;
+    -moz-transition: .2s;
+    -ms-transition: .2s;
+}
+
+.indexbar input:focus {
+    width: 30%;
+}
+
+.indexbar button {
+    float: right;
+    width: 6vmin;
+    height: 6vmin;
+    margin: 1vh 3vh 1vh 1.5vh;
+    background: none;
+    background-repeat: no-repeat;
+    background-image: url("../assets/search.svg");
+    cursor: pointer;
+}
+
+.indexbar button:active {
+    background-image: url("../assets/search_active.svg");
+}
