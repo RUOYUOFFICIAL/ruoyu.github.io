@@ -11,6 +11,10 @@
     text-align: center;
     color: white;
     background-color: #221133;
+    background-image: url("../assets/yu.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     /* background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%); */
     cursor: pointer;
     transition: .3s;
@@ -28,12 +32,11 @@
 /*黑洞过渡*/
 
 .core:hover {
-    background-color: #8888AA;
-    background-image: url("../assets/spin_hover.svg");
-    animation: rotate 5.4s linear infinite;
+    /* background-color: #8888AA; */
+    /* animation: rotate 5.4s linear infinite;
     -webkit-animation: rotate 5.4s linear infinite;
     -moz-animation: rotate 5.4s linear infinite;
-    -ms-animation: rotate 5.4s linear infinite;
+    -ms-animation: rotate 5.4s linear infinite; */
 }
 
 .core:hover,
