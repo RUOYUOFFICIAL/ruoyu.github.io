@@ -1,15 +1,9 @@
-var header = document.getElementById("header"),
-  indexbar = document.getElementById("indexbar"),
-  indexbar_children = indexbar.children,
-  search_ipt = document.getElementById("search_ipt"),
-  footer = document.getElementById("footer");
-
 //指令控制
 var cmdPattern = false;
 search_ipt.onkeyup = function (e) {
   var keyCode = e.keyCode || e.which || e.charCode,
     ctrlKey = e.ctrlKey || e.metaKey,
-    cmdInfo = "";
+    cmdInfo = '';
   switch (keyCode) {
     case 8: //
       break;
@@ -19,48 +13,48 @@ search_ipt.onkeyup = function (e) {
       if (cmdPattern) {
         //指令模式
         switch (ipttext) {
-          case "e":
-          case "exit":
-          case "q":
-          case "quit":
+          case 'e':
+          case 'exit':
+          case 'q':
+          case 'quit':
             cmdInfo = cmd_quit();
             break;
-          case "re":
-          case "rf":
-          case "refresh":
-          case "rl":
-          case "reload":
+          case 're':
+          case 'rf':
+          case 'refresh':
+          case 'rl':
+          case 'reload':
             cmd_reload();
             break;
-          case "top":
+          case 'top':
             cmdInfo = cmd_top();
             break;
-          case "btm":
-          case "bottom":
+          case 'btm':
+          case 'bottom':
             cmdInfo = cmd_bottom();
             break;
-          case "noflow":
+          case 'noflow':
             cmdInfo = cmd_noflow();
             break;
-          case "showflow":
+          case 'showflow':
             cmdInfo = cmd_showflow();
             break;
-          case "nome":
+          case 'nome':
             cmdInfo = cmd_nome();
             break;
-          case "showme":
+          case 'showme':
             cmdInfo = cmd_showme();
             break;
-          case "":
+          case '':
             break;
           default:
-            cmdInfo = "invalid cmd: " + ipttext;
+            cmdInfo = 'invalid cmd: ' + ipttext;
             break;
         }
       } else {
         //非指令模式
         switch (ipttext.toLowerCase()) {
-          case "cmd":
+          case 'cmd':
             cmdInfo = cmd_run();
             break;
           default:
@@ -69,17 +63,17 @@ search_ipt.onkeyup = function (e) {
       }
       let suffixcmd = ipttext.substr(iptlen - 2, iptlen);
       switch (suffixcmd) {
-        case "``":
+        case '``':
           search_ipt.value = ipttext.substr(0, iptlen - 2);
           cmdInfo = cmd_escape();
           break;
-        case "`c":
+        case '`c':
           cmdInfo = cmd_clear();
           break;
         default:
           break;
       }
-      if (cmdInfo != "") cmdInfo += "<br/>";
+      if (cmdInfo != '') cmdInfo += '<br/>';
       center.innerHTML = cmd_info(cmdInfo);
       break;
   }

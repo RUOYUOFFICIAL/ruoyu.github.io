@@ -1,4 +1,5 @@
 //元素注册
+var AUTHOR = 'RUOYU';
 function Elem(id) {
   return document.getElementById(id);
 }
@@ -6,14 +7,13 @@ function Elem(id) {
 var HEADER = Elem('header'),
   MAJOR = Elem('major'),
   FOOTER = Elem('footer'),
-  galaxy = Elem('galaxy'),
-  galaxyCtx = galaxy.getContext('2d'),
+  GLX = Elem('galaxy'),
+  CTX = GLX.getContext('2d'),
   core = Elem('core'),
   indexbar = Elem('indexbar'),
   search_btn = Elem('search_btn'),
   search_ipt = Elem('search_ipt'),
-  year = Elem('year'),
-  author = Elem('author');
+  ftext = Elem('ftext');
 
 //事件量
 var mousePos = { x: 0, y: 0 },
@@ -21,7 +21,8 @@ var mousePos = { x: 0, y: 0 },
   mouse_Left = false,
   mouse_Mid = false,
   mouse_Right = false,
-  key_CONSOLE = false,
+  key_Console = false,
+  key_Shift = false,
   key_Ctrl = false,
   key_W = false,
   key_S = false,
@@ -36,14 +37,16 @@ var DEBUG = false,
   deb_cmd = false, // 指令调试
   deb_obj = false; //对象调试
 
-//常量
-var ZERO = 0.01,
+//galaxy常量
+var FPS = 60,
+  ZERO = 0.01,
   PI = Math.PI,
   count = 20,
-  size = 15,
+  size = 24,
   size_ratio = 2,
-  speed = 0.2,
+  speed = 0.3,
   speed_ratio = 2,
   force = 30,
   acc = 1,
-  dec = 0.95;
+  dec = 0.975,
+  angle = NaN;

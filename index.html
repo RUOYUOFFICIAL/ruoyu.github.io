@@ -23,14 +23,14 @@
     onbeforecopy="return false"
   >
     <!--blackhole start-->
-    <div class="header" id="header">
+    <div id="header">
       <!--Galaxy start-->
-      <canvas id="galaxy" style="top: 0; z-index: 0"></canvas>
+      <canvas id="galaxy" style="position: fixed; top: 0; z-index: 0"></canvas>
       <!--Galaxy end-->
-      <div class="core" id="core" onClick="">
+      <div id="core" onClick="">
         <div class="pulse" style="animation-delay: 0.3s"></div>
         <div class="pulse" style="animation-delay: 1.3s"></div>
-        <div class="pulse" style="animation-delay: 2.3s"></div>
+        <!-- <div class="pulse" style="animation-delay: 2.3s"></div> -->
       </div>
     </div>
     <!--blackhole end-->
@@ -43,7 +43,7 @@
     </div>
     <!--indexbar end-->
     <!--major start-->
-    <div class="major">
+    <div id="major">
       <!-- <div class="left" id="left">
         <h2>若</h2>
         <div class="pic"></div>
@@ -58,9 +58,8 @@
     </div>
     <!--major end-->
     <!--footer start-->
-    <div class="footer" id="footer" title="">
-      &copy;<span id="year"></span>&nbsp;&nbsp;&#64;<span id="author"></span
-      >&nbsp;<i>.DESIGN,&nbsp;.CODE</i>
+    <div id="footer" title="">
+      <span id="ftext"></span>
     </div>
     <!--footer end-->
   </body>
@@ -70,8 +69,8 @@
   <script type="text/javascript" src="./src/policy/events.js"></script>
   <script type="text/javascript" src="./src/policy/lib.js"></script>
   <script type="text/javascript" src="./src/policy/obj.js"></script>
-  <script type="text/javascript" src="./src/policy/component.js"></script>
-  <script type="text/javascript" src="./src/policy/galaxy.js"></script>
+  <!-- <script type="text/javascript" src="./src/policy/component.js"></script> -->
+  <script type="text/javascript" src="./src/policy/plot.js"></script>
   <script type="text/javascript" src="./src/policy/run.js"></script>
   <!--script end-->
 </html>

@@ -1,6 +1,6 @@
 /* :root见base.css */
 /*core as Header*/
-.core {
+#core {
     position: absolute;
     top: 40%;
     left: 50%;
@@ -23,7 +23,7 @@
     transition: var(--fast-tst);
 }
 
-.core,
+#core,
 .pulse {
     border-radius: 50%;
 }
@@ -31,13 +31,13 @@
 
 /*黑洞过渡*/
 
-.core:hover {
+#core:hover {
     background-color: var(--core-bgc-hover);
     /* animation: rotate 5.4s linear infinite; */
 }
 
-.core:hover,
-.core:hover .pulse {
+#core:hover,
+#core:hover .pulse {
     width: var(--core-r-hover);
     height: var(--core-r-hover);
     line-height: var(--core-r-hover);
@@ -59,11 +59,11 @@
 
 /*伪波纹扩散*/
 
-.core:hover .pulse {
+#core:hover .pulse {
     position: absolute;
     box-shadow: 0 0 1vh .5vh var(--core-bgc-hover);
     opacity: 0;
-    animation: oneWave calc(3 * var(--slow-tst)) ease-out infinite;
+    animation: oneWave calc(2 * var(--slow-tst)) ease-out infinite;
 }
 
 @keyframes oneWave {

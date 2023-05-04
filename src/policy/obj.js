@@ -9,13 +9,13 @@ class A {
  * 简单球:
  * 刚性，定速
  */
-class Ball0 extends A {
+class Ball extends A {
   constructor(ID, name, _size, _speed, _angle, _color) {
     super(ID, name);
     this.show = true;
     this.r = _size;
-    this.y = rand(_size, CTX.height - _size);
-    this.x = rand(_size, CTX.width - _size);
+    this.y = rand(_size, CTX.height - 2 * _size);
+    this.x = rand(_size, CTX.width - 2 * _size);
     this.θ = _angle;
     this.v = _speed;
     this.vy = _speed * sin(_angle);
@@ -38,33 +38,48 @@ class Ball0 extends A {
     if (n == 0) return;
     for (var i = 0; i < n; i++) {}
   }
-  update() {
-    this.vx;
-    this.vy;
+  move() {
+    // this.vx;
+    // this.vy;
     this.θ = atan2(this.vy, this.vx);
     this.v = sqrt2(this.vy, this.vx);
     this.x += this.vx;
-    this.y += this.vy;
+    this.y += this.vy; //先撞墙
+    if (this.x <= this.r || this.x >= CTX.width - this.r) {
+      if (this.x <= this.r) this.x = this.r;
+      else this.x = CTX.width - this.r;
+      this.vx *= -1;
+    }
+    if (this.y <= this.r || this.y >= CTX.height - this.r) {
+      if (this.y <= this.r) this.y = this.r;
+      else this.y = CTX.height - this.r;
+      this.vy *= -1;
+    }
   }
-  draw() {
+  plot() {
     if (!this.show) return;
     CTX.beginPath();
+    CTX.globalAlpha = 1;
     CTX.fillStyle = this.color;
     CTX.arc(this.x, this.y, this.r, 0, 2 * PI);
     CTX.fill();
-    if (!DEBUG) return;
-    CTX.beginPath();
-    CTX.fillStyle = "yellow";
-    CTX.fillText(
-      `${this.ID},${(this.θ / PI).toFixed(2)},${cos(this.θ).toFixed(2)},${sin(
-        this.θ
-      ).toFixed(2)}`,
-      this.x,
-      this.y
-    );
-    CTX.fill();
+    if (DEBUG && deb_obj) {
+      CTX.beginPath();
+      CTX.strokeStyle = 'yellow';
+      CTX.lineWidth = 2;
+      CTX.moveTo(this.x, this.y);
+      CTX.lineTo(this.x + this.r * cos(this.θ), this.y + this.r * sin(this.θ));
+      CTX.stroke();
+      CTX.beginPath();
+      CTX.fillStyle = 'white';
+      CTX.fillText(
+        `no.${this.ID}`, //, ${this.x.toFixed()} , ${this.y.toFixed()}
+        this.x,
+        this.y
+      );
+      CTX.fill();
+    }
   }
-  frame() {}
   collide_with(b) {
     var theta = atan2p(this, b),
       theta1 = this.θ - theta,
@@ -84,12 +99,12 @@ class Ball0 extends A {
     vs2 = (dif * vs2 + 2 * p1) / sum;
     this.vy = vs1 * sin(theta1) + vt1 * cos(theta1);
     this.vx = vs1 * cos(theta1) + vt1 * sin(theta1);
-    this.update();
-    this.draw();
+    this.move();
+    this.plot();
     b.vy = vs2 * sin(theta2) + vt2 * cos(theta2);
     b.vx = vs2 * cos(theta2) + vt2 * sin(theta2);
-    b.update();
-    b.draw();
+    b.move();
+    b.plot();
     // var coX = isCollide(this, b, true), coY = isCollide(this, b, false)
     // if (abs(this.r - b.size) / this.r <= ZERO) {//两个球大小相等
     //     if (coX) swap(this.vx, b.vx)
@@ -110,22 +125,13 @@ class Ball0 extends A {
     // }
   }
 }
-/**
- * 球集
- */
-class Balls extends A {
-  constructor(ID, name, _count) {
-    super(ID, name);
-    this.count = _count;
-    this.balls = [];
-  }
-}
+
 /**
  * 动力球
  */
-class Ball1 extends Ball0 {
+class goBall extends Ball {
   constructor(ID, name) {
-    super(ID, name, size, NaN, 0, "#ef4136");
+    super(ID, name, size, NaN, 0, '#e43');
     this.fx = 0;
     this.fy = 0;
     this.level = 1;
@@ -133,11 +139,11 @@ class Ball1 extends Ball0 {
     this.r_ = size; //目标尺寸
   }
   single_frame() {
-    this.draw();
+    this.plot();
     this.grow();
-    this.update();
+    this.move();
   }
-  draw() {
+  plot() {
     if (!me.show) return;
     CTX.fillStyle = this.color;
     CTX.beginPath();
@@ -147,11 +153,11 @@ class Ball1 extends Ball0 {
     CTX.beginPath();
     CTX.moveTo(this.x, this.y);
     CTX.lineTo(mousePos.x, mousePos.y);
-    CTX.strokeStyle = "black";
+    CTX.strokeStyle = 'black';
     CTX.stroke();
     if (!DEBUG) return;
     CTX.beginPath();
-    CTX.fillStyle = "white";
+    CTX.fillStyle = 'white';
     CTX.fillText(`${this.name}/${this.level}`, this.x, this.y);
     CTX.fill();
   }
@@ -193,7 +199,7 @@ class Ball1 extends Ball0 {
     this.r_ = sqrt(this.level) * size;
     this.energy = this.energy < 0.9 ? this.energy + 0.1 : 1;
   }
-  update() {
+  move() {
     //坐标
     if (key_Space && (key_D || key_S || key_A || key_W) && this.energy > 0) {
       acc = 2;

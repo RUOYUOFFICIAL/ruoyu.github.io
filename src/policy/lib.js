@@ -17,7 +17,8 @@ function randAngle() {
   return randVal(PI, 0, 2);
 }
 function randColor() {
-  return `rgb(${rand(30, 90)},${rand(30, 90)},${rand(60, 180)})`;
+  //蓝紫色系列
+  return `rgb(${rand(90, 105)},${rand(30, 60)},${rand(90, 135)})`;
 }
 
 function sqr(n) {
@@ -82,8 +83,18 @@ function atan2p(p1, p2) {
   return atan2(p2.y - p1.y, p2.x - p1.x);
 }
 
+//交换
 function swap(a, b) {
   var t = a;
   a = b;
   b = t;
+}
+
+//跳转
+function _2URL(url) {
+  top.location.href = url;
+}
+//延时跳转
+function Dlay2URL(url, time) {
+  setTimeout(`top.location.href = ${url}`, time);
 }

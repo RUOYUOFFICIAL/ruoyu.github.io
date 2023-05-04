@@ -19,17 +19,19 @@
     --slow-tst: 1s;
     /* header */
     --h-full-sh: 100vh;
-    --h-bgi: radial-gradient(circle at 40% 50%, #cff 0, #9cf 50%);
+    --h-bgi: radial-gradient(circle at 50% 50%, #cff 0, #9cf 50%);
     /* major */
     --m-full-sh: 120vh;
     --m-bgi: linear-gradient(135deg, #7DE2FC 0%, #B9B6E5 100%);
     /* footer */
     --f-lr-width: 20vw;
     --f-height: 1.5vh;
-    --f-height-hover: 5vh;
-    --f-font-size: 100%;
-    --f-bgc: #424;
+    --f-height-hover: 4vh;
+    --f-font-size: 20%;
+    --f-font-size-hover: 100%;
+    --f-bgc: #446;
     --f-item-bgc: lightsteelblue;
+    --f-ltspc: 5px;
     /* for components */
     /* 滚动条 */
     --sb-width: 6px;
@@ -43,9 +45,9 @@
     --ib-item-bgc: var(--f-item-bgc);
     --ib-item-c: black;
     --ib-height: 8vh;
-    --ib-item-width: 15%;
-    --ib-item-width-hover: 20%;
-    --ib-item-width-focus: 30%;
+    --ib-item-width: 10%;
+    --ib-item-width-hover: 15%;
+    --ib-item-width-focus: 20%;
     --ib-item-margin: 1vh;
     --ib-item-height: calc(var(--ib-height) - var(--ib-item-margin)*2);
     --ib-item-br: calc(var(--ib-item-height)/2);
@@ -56,7 +58,7 @@
 
     /* for pulse */
     --core-r: 25vh;
-    --core-r-hover: 35vh;
+    --core-r-hover: 30vh;
     --core-bgc: #448;
     --core-bgc-hover: #336;
 }
@@ -81,7 +83,7 @@ a {
     cursor: pointer;
 }
 
-.header {
+#header {
     width: var(--full-cw);
     height: var(--h-full-sh);
     /* padding: .1px 0; */
@@ -91,7 +93,7 @@ a {
 
 /*中部容器*/
 
-.major {
+#major {
     /* margin: 0; */
     position: relative;
     width: var(--full-cw);
@@ -108,7 +110,7 @@ a {
 
 /* 底部 */
 
-.footer {
+#footer {
     z-index: var(--ztop);
     position: fixed;
     left: var(--f-lr-width);
@@ -123,20 +125,20 @@ a {
     /* font-weight: bold; */
     text-align: center;
     line-height: var(--f-height-hover);
-    font-weight: bold;
+    letter-spacing: var(--f-ltspc);
     /* cursor: default; */
     /*兼容IE11*/
     opacity: var(--low-opa);
-    transition: var(--mid-tst);
+    transition: var(--fast-tst);
 }
 
 
 /*底部过渡*/
 
-.footer:hover {
+#footer:hover {
     height: var(--f-height-hover);
     opacity: var(--high-opa);
     line-height: var(--f-height-hover);
-    font-size: var(--f-font-size);
+    font-size: var(--f-font-size-hover);
     color: var(--f-item-bgc);
 }
