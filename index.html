@@ -25,44 +25,17 @@
     <!--blackhole start-->
     <div class="header" id="header">
       <!--Galaxy start-->
-      <canvas id="galaxy" style="z-index: 0"></canvas>
+      <canvas id="galaxy" style="top: 0; z-index: 0"></canvas>
       <!--Galaxy end-->
       <div class="core" id="core" onClick="">
-        <div
-          class="pulse"
-          style="
-            animation-delay: 0.3s;
-            -webkit-animation-delay: 0.3s;
-            -moz-animation-delay: 0.3s;
-            -ms-animation-delay: 0.3s;
-            -o-animation-delay: 0.3s;
-          "
-        ></div>
-        <div
-          class="pulse"
-          style="
-            animation-delay: 1.2s;
-            -webkit-animation-delay: 1.2s;
-            -moz-animation-delay: 1.2s;
-            -ms-animation-delay: 1.2s;
-            -o-animation-delay: 1.2s;
-          "
-        ></div>
-        <div
-          class="pulse"
-          style="
-            animation-delay: 2.1s;
-            -webkit-animation-delay: 2.1s;
-            -moz-animation-delay: 2.1s;
-            -ms-animation-delay: 2.1s;
-            -o-animation-delay: 2.1s;
-          "
-        ></div>
+        <div class="pulse" style="animation-delay: 0.3s"></div>
+        <div class="pulse" style="animation-delay: 1.3s"></div>
+        <div class="pulse" style="animation-delay: 2.3s"></div>
       </div>
     </div>
     <!--blackhole end-->
     <!--indexbar start-->
-    <div class="indexbar" id="indexbar">
+    <div id="indexbar">
       <button id="search_btn" type="submit"></button>
       <input id="search_ipt" type="text" placeholder="搜索" />
       <a href="javascript:" onClick="">@</a>
@@ -86,9 +59,8 @@
     <!--major end-->
     <!--footer start-->
     <div class="footer" id="footer" title="">
-      &copy;<span id="year"></span>&nbsp;&nbsp;&#64;this&nbsp;<i
-        >.DESIGN,&nbsp;.CODE</i
-      >
+      &copy;<span id="year"></span>&nbsp;&nbsp;&#64;<span id="author"></span
+      >&nbsp;<i>.DESIGN,&nbsp;.CODE</i>
     </div>
     <!--footer end-->
   </body>

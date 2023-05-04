@@ -9,7 +9,7 @@ var baseWidth = header.scrollWidth, //采用scrollWidth或scrollHeight是为自�
 
 galaxy.width = baseWidth;
 galaxy.height = baseHeight;
-galaxy.style.position = "fixed";
+galaxy.style.position = 'fixed';
 galaxyCtx.lineWidth = 0.3;
 
 //(min,min+range)随机数字,避免使用Math.floor导致的同速问题
@@ -19,13 +19,13 @@ function randomNum(min, range) {
 //随机颜色，使用Math.floor取整以兼容IE11
 function randomColor() {
   return (
-    "rgb(" +
+    'rgb(' +
     Math.floor(randomNum(42, 60)) +
-    "," +
+    ',' +
     Math.floor(randomNum(18, 24)) +
-    "," +
+    ',' +
     Math.floor(randomNum(60, 60)) +
-    ")"
+    ')'
   );
 }
 //距离平方
@@ -135,12 +135,12 @@ function galaxyPlot() {
           header.scrollHeight
       );
     header.style.setProperty(
-      "background-image",
-      "radial-gradient(circle  at " +
+      'background-image',
+      'radial-gradient(circle  at ' +
         xrate.toString() +
-        "% " +
+        '% ' +
         yrate.toString() +
-        "%, #ccffff 0, #99ccff 60%)"
+        '%, #ccffff 0, #99ccff 60%)'
     );
     angle = tmp_angle;
     //console.log("replot at " + xrate + "/" + yrate);
@@ -157,7 +157,7 @@ function galaxyPlot() {
       galaxyCtx.beginPath();
       galaxyCtx.moveTo(mouseX, mouseY);
       galaxyCtx.lineTo(particles[i].x, particles[i].y);
-      galaxyCtx.strokeStyle = "black";
+      galaxyCtx.strokeStyle = 'black';
       galaxyCtx.stroke();
     }
     //考虑采用全局的lineWidth=0.3替代globalAlpha的反复改变，均可达到弱化线条视觉效果的目的
@@ -174,7 +174,7 @@ function galaxyPlot() {
         galaxyCtx.lineTo(particles[j].x, particles[j].y);
       }
     }
-    galaxyCtx.strokeStyle = "white";
+    galaxyCtx.strokeStyle = 'white';
     galaxyCtx.stroke();
   }
 }

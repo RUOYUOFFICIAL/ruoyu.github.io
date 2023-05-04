@@ -3,16 +3,17 @@ function Elem(id) {
   return document.getElementById(id);
 }
 
-var HEADER = Elem("header"),
-  MAJOR = Elem("major"),
-  FOOTER = Elem("footer"),
-  galaxy = Elem("galaxy"),
-  galaxyCtx = galaxy.getContext("2d"),
-  core = Elem("core"),
-  indexbar = Elem("indexbar"),
-  search_btn = Elem("search_btn"),
-  search_ipt = Elem("search_ipt"),
-  year = Elem("year");
+var HEADER = Elem('header'),
+  MAJOR = Elem('major'),
+  FOOTER = Elem('footer'),
+  galaxy = Elem('galaxy'),
+  galaxyCtx = galaxy.getContext('2d'),
+  core = Elem('core'),
+  indexbar = Elem('indexbar'),
+  search_btn = Elem('search_btn'),
+  search_ipt = Elem('search_ipt'),
+  year = Elem('year'),
+  author = Elem('author');
 
 //事件量
 var mousePos = { x: 0, y: 0 },
@@ -32,7 +33,9 @@ var mousePos = { x: 0, y: 0 },
 var DEBUG = false,
   deb_key = false, //按键调试
   deb_mouse = false, //鼠标调试
-  deb_cmd = false; // 指令调试
+  deb_cmd = false, // 指令调试
+  deb_obj = false; //对象调试
+
 //常量
 var ZERO = 0.01,
   PI = Math.PI,
