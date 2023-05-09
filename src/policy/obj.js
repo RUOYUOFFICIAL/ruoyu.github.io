@@ -1,4 +1,12 @@
+/**
+ * 基类A
+ */
 class A {
+  /**
+   *
+   * @param {string} ID 唯一标识符
+   * @param {string} name 名
+   */
   constructor(ID, name) {
     this.ID = ID;
     this.name = name;
@@ -6,10 +14,18 @@ class A {
 }
 
 /**
- * 简单球:
- * 刚性，定速
+ * 简单球类 Ball
  */
 class Ball extends A {
+  /**
+   *
+   * @param {string} ID 继承标识符
+   * @param {string} name 继承名
+   * @param {number} _size 半径
+   * @param {number} _speed 速度
+   * @param {number} _angle 运动角
+   * @param {string} _color 颜色
+   */
   constructor(ID, name, _size, _speed, _angle, _color) {
     super(ID, name);
     this.show = true;
@@ -22,22 +38,26 @@ class Ball extends A {
     this.vx = _speed * cos(_angle);
     this.color = _color;
   }
-  collide(other, n) {
-    //先撞墙
-    if (this.x < this.r || this.x > CTX.width - this.r) {
-      if (this.x < this.r) this.x = this.r;
-      else this.x = CTX.width - this.r;
-      this.vx *= -1;
-    }
-    if (this.y < this.r || this.y > CTX.height - this.r) {
-      if (this.y < this.r) this.y = this.r;
-      else this.y = CTX.height - this.r;
-      this.vy *= -1;
-    }
-    //再撞球
-    if (n == 0) return;
-    for (var i = 0; i < n; i++) {}
-  }
+  // collide(other, n) {
+  //   //先撞墙
+  //   if (this.x < this.r || this.x > CTX.width - this.r) {
+  //     if (this.x < this.r) this.x = this.r;
+  //     else this.x = CTX.width - this.r;
+  //     this.vx *= -1;
+  //   }
+  //   if (this.y < this.r || this.y > CTX.height - this.r) {
+  //     if (this.y < this.r) this.y = this.r;
+  //     else this.y = CTX.height - this.r;
+  //     this.vy *= -1;
+  //   }
+  //   //再撞球
+  //   if (n == 0) return;
+  //   for (var i = 0; i < n; i++) {}
+  // }
+
+  /**
+   *
+   */
   move() {
     // this.vx;
     // this.vy;
@@ -56,6 +76,10 @@ class Ball extends A {
       this.vy *= -1;
     }
   }
+
+  /**
+   * 绘制
+   */
   plot() {
     if (!this.show) return;
     CTX.beginPath();
@@ -80,6 +104,10 @@ class Ball extends A {
       CTX.fill();
     }
   }
+  /**
+   *
+   * @param {Ball} b 另一个球
+   */
   collide_with(b) {
     var theta = atan2p(this, b),
       theta1 = this.θ - theta,
@@ -127,7 +155,7 @@ class Ball extends A {
 }
 
 /**
- * 动力球
+ * 动力球类 goBall
  */
 class goBall extends Ball {
   constructor(ID, name) {
@@ -136,13 +164,19 @@ class goBall extends Ball {
     this.fy = 0;
     this.level = 1;
     this.energy = 1;
-    this.r_ = size; //目标尺寸
+    this.r_ = size;
   }
+  /**
+   * 单帧
+   */
   single_frame() {
     this.plot();
     this.grow();
     this.move();
   }
+  /**
+   * 绘制
+   */
   plot() {
     if (!me.show) return;
     CTX.fillStyle = this.color;
@@ -161,6 +195,9 @@ class goBall extends Ball {
     CTX.fillText(`${this.name}/${this.level}`, this.x, this.y);
     CTX.fill();
   }
+  /**
+   * 内动力
+   */
   active_force() {
     var θ = NaN,
       fsin = 0,
@@ -181,6 +218,9 @@ class goBall extends Ball {
     }
     return [fsin, fcos];
   }
+  /**
+   * 外动力
+   */
   external_force() {
     var f = 0,
       fsin,
@@ -190,15 +230,24 @@ class goBall extends Ball {
     fcos = f * cos2p(this, mousePos);
     return [fsin, fcos];
   }
+  /**
+   * 成长
+   */
   grow() {
     //尺寸
     if (this.r < this.r_) this.r += Math.log(this.r_ / this.r);
   }
+  /**
+   * 升级
+   */
   levelUp() {
     this.level++;
     this.r_ = sqrt(this.level) * size;
     this.energy = this.energy < 0.9 ? this.energy + 0.1 : 1;
   }
+  /**
+   * 移动
+   */
   move() {
     //坐标
     if (key_Space && (key_D || key_S || key_A || key_W) && this.energy > 0) {

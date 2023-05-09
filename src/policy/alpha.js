@@ -1,5 +1,5 @@
 //元素注册
-var AUTHOR = 'RUOYU';
+var AUTHOR = '若愚[RUOYU]';
 function Elem(id) {
   return document.getElementById(id);
 }
@@ -16,7 +16,7 @@ var HEADER = Elem('header'),
   ftext = Elem('ftext');
 
 //事件量
-var mousePos = { x: 0, y: 0 },
+var mousePOS = { x: 0, y: 0 },
   mouseFOCUS = false,
   mouse_Left = false,
   mouse_Mid = false,
@@ -38,15 +38,24 @@ var DEBUG = false,
   deb_obj = false; //对象调试
 
 //galaxy常量
-var FPS = 60,
-  ZERO = 0.01,
+var AREA = 1428000, //1700*840
+  FPS = 60,
   PI = Math.PI,
+  SPEED = 15, //屏幕速度，结合PFS
+  ZERO = 0.01,
+  WidthRatio = 1,
+  HeightRatio = 1,
+  AreaRatio = 1,
   count = 20,
   size = 24,
   size_ratio = 2,
-  speed = 0.3,
+  speed = SPEED / FPS,
   speed_ratio = 2,
   force = 30,
-  acc = 1,
-  dec = 0.975,
-  angle = NaN;
+  acc = 1, //加速系数
+  dec = 0.975, //阻力系数
+  angle = NaN,
+  len1 = 300, //光标范围
+  len2 = 200, //球体范围
+  broad_wid = 1, //宽线
+  narrow_wid = 0.5; //细线

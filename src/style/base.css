@@ -29,7 +29,7 @@
     --f-height-hover: 4vh;
     --f-font-size: 20%;
     --f-font-size-hover: 100%;
-    --f-bgc: #446;
+    --f-bgc: #368;
     --f-item-bgc: lightsteelblue;
     --f-ltspc: 5px;
     /* for components */
@@ -59,8 +59,8 @@
     /* for pulse */
     --core-r: 25vh;
     --core-r-hover: 30vh;
-    --core-bgc: #448;
-    --core-bgc-hover: #336;
+    --core-bgc: #478;
+    --core-bgc-hover: #246;
 }
 
 body {

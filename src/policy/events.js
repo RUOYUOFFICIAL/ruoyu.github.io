@@ -111,8 +111,8 @@ GLX.onmouseenter = GLX.onmousemove = (ev) => {
   var e = ev;
   if (DEBUG && deb_mouse)
     console.log('M_ENTER|MOVE:(', e.offsetX, ',', e.offsetY, ')');
-  mousePos.x = e.offsetX;
-  mousePos.y = e.offsetY;
+  mousePOS.x = e.offsetX;
+  mousePOS.y = e.offsetY;
 };
 GLX.onmouseleave = () => {
   if (DEBUG && deb_mouse) console.log('M_LEAVE');
@@ -163,9 +163,11 @@ GLX.onmouseup = (ev) => {
 window.addEventListener('scroll', () => {
   if (document.documentElement.scrollTop < HEADER.scrollHeight) {
     galaxy.style.display = 'block';
+    core.style.display = 'block';
     indexbar.style.opacity = 'var(--high-opa)';
   } else {
     galaxy.style.display = 'none';
+    core.style.display = 'none';
     indexbar.style.opacity = 'var(--low-opa)';
   }
 });
