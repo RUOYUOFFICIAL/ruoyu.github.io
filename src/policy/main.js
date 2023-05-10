@@ -9,9 +9,10 @@ function main() {
     })
     .then(cfgJson => {
       // 处理json
-      // console.log('config ok');
+      console.log('config ok');
       // console.log(text);
       CONFIG = cfgJson;
+      console.log(CONFIG.Key[0].key);
       var year = new Date().getFullYear();
       ftext.innerHTML = `<b>&copy;${year}  &#64;${CONFIG.author} ·</b>   <i>Design & Code</i>`;
 
