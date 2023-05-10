@@ -1,4 +1,5 @@
 function main() {
+  getConfig();
   var year = new Date().getFullYear(),
     AUTHOR = '若愚[RUOYU]';
   ftext.innerHTML = `<b>&copy;${year}  &#64;${AUTHOR} ·</b>   <i>Design & Code</i>`;

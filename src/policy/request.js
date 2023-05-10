@@ -1,5 +1,5 @@
 function getConfig() {
-  fetch('')
+  fetch('./src/config')
     .then(function (response) {
       if (response.ok) {
         return response.text();
