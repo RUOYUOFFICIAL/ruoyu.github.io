@@ -21,6 +21,8 @@
     onselect="document.selection.empty()"
     oncopy="document.selection.empty()"
     onbeforecopy="return false"
+    unselectable="on"
+    draggable="false"
   >
     <!--blackhole start-->
     <div id="header">
@@ -38,8 +40,8 @@
     <div id="indexbar">
       <button id="search_btn" type="submit"></button>
       <input id="search_ipt" type="text" placeholder="搜索" />
-      <a href="javascript:" onClick="">@</a>
-      <a href="javascript:" onClick="">@</a>
+      <p onClick="_2Route('page1.html')">@1</a>
+      <p onClick="_2Route('page2.html')">@2</a>
     </div>
     <!--indexbar end-->
     <!--major start-->
@@ -71,7 +73,7 @@
   <script type="text/javascript" src="./src/policy/obj.js"></script>
   <!-- <script type="text/javascript" src="./src/policy/component.js"></script> -->
   <script type="text/javascript" src="./src/policy/plot.js"></script>
-  <script type="text/javascript" src="./src/policy/run.js"></script>
+  <script type="text/javascript" src="./src/policy/main.js"></script>
   <!--script end-->
 </html>
 <!--html end-->

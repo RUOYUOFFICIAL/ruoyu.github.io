@@ -1,3 +1,8 @@
+/**
+ * 画布初始化
+ * @param {number} width 宽
+ * @param {number} height 高
+ */
 function GLXInit(width, height) {
   GLX.width = width;
   GLX.height = height;
@@ -6,22 +11,21 @@ function GLXInit(width, height) {
   CTX.textAlign = 'center';
   CTX.font = `${size * 0.75}px sans-serif`;
 }
+/**
+ * 绘制初始化，包括一些宽高相关的常量
+ * @param {number} width 宽
+ * @param {number} height 高
+ */
 function Init(width, height) {
-  AreaRatio = (width * height) / AREA;
-  len1 *= AreaRatio;
-  len2 *= AreaRatio;
-  size *= AreaRatio;
+  ratio_w = width / WIDTH;
+  ratio_h = height / HEIGHT;
+  len_short *= ZoomRatio('line');
+  len_long = len_short * ratio_mid;
+  size *= ZoomRatio('ball');
   GLXInit(width, height);
+  // console.log(GLX.scrollHeight, GLX.scrollWidth, len_long);
+  // console.log(width, height);
 }
-Init(HEADER.scrollWidth, HEADER.scrollHeight);
-// console.log(CTX.font);
-//存储所有粒子
-var BALLs = [];
-//入栈若干粒子
-for (let i = 0; i < count; i++)
-  BALLs.push(
-    new Ball(i, '!me', randSize(), randSpeed(), randAngle(), randIndigo())
-  );
 
 //窗口尺寸改变，重绘粒子
 function reBALLs() {
@@ -29,32 +33,35 @@ function reBALLs() {
     curHeight = HEADER.scrollHeight,
     preWidth = CTX.width,
     preHeight = CTX.height;
-  WidthRatio = curWidth / preWidth;
-  HeightRatio = curHeight / preHeight;
-  AreaRatio = WidthRatio * HeightRatio;
-  len1 *= AreaRatio;
-  len2 *= AreaRatio;
+  ratio_w = curWidth / preWidth;
+  ratio_h = curHeight / preHeight;
+  var ratio_area = ZoomRatio('area');
+  len_short *= ratio_area; //   ZoomRatio('line');
+  len_long = len_short * ratio_mid;
   for (let i = 0; i < count; i++) {
-    BALLs[i].r *= AreaRatio;
-    BALLs[i].x *= WidthRatio;
-    BALLs[i].y *= HeightRatio;
+    BALLs[i].r *= ratio_area;
+    BALLs[i].x *= ratio_w;
+    BALLs[i].y *= ratio_h;
   }
+  // console.log(curHeight, curWidth, len_long);
+  //注意，上面各个尺寸放缩后，CTX的大小必须重新设置，结合run.js中的window.onresize事件查看
   // CTX.width = curWidth;
   // CTX.height = curHeight;
 }
-//画布绘制
-function PLOT() {
-  //绘制当前帧内容
+
+//绘制背景层
+function onBGIPlot() {
   //利用角度变化近似鼠标的移动行为，因为人为移动鼠标不可能总使得角度不变
   var tmp_angle = atan2(mousePOS.x, mousePOS.y);
-  if (mouseFOCUS && tmp_angle != angle) {
-    var xrate = (100 * mousePOS.x) / HEADER.scrollWidth,
-      yrate =
-        (100 * (mousePOS.y + document.documentElement.scrollTop)) /
-        HEADER.scrollHeight;
+  if (mouseFOCUS && tmp_angle != ANGLE) {
+    ratio_x = (100 * mousePOS.x) / HEADER.scrollWidth;
+    ratio_y =
+      (100 * (mousePOS.y + document.documentElement.scrollTop)) /
+      HEADER.scrollHeight;
+    //console.log("replot at " + ratio_x + "/" + ratio_y);
     HEADER.style.setProperty(
       'background-image',
-      `radial-gradient(circle at ${xrate}% ${yrate}%, #cff 0, #9cf 50%)`
+      `radial-gradient(circle at ${ratio_x}% ${ratio_y}%, lightcyan 0, skyblue 50%)`
     );
     if (DEBUG && deb_mouse) {
       var rect = core.getBoundingClientRect(),
@@ -67,48 +74,59 @@ function PLOT() {
         }deg, #9AF 30%, #369 90%)`
       );
     }
-    // console.log(core.style);
-    angle = tmp_angle;
-    //console.log("replot at " + xrate + "/" + yrate);
+    // 记录当前角度以便下次对比
+    ANGLE = tmp_angle;
   }
-  //绘制小球之间、球与鼠标之间画线
+}
+
+//绘制球体层
+function onBallPlot() {
   for (let i = count - 1; -1 < i; i--) {
     if (BALLs[i].show) {
       var b1 = BALLs[i];
+      //先画球
       b1.plot();
       b1.move();
-      if (mouseFOCUS && sqr(len1) >= sqr2p(b1, mousePOS)) {
+      //再画球与鼠标的连线
+      if (mouseFOCUS && sqr(len_long) >= sqr2p(b1, mousePOS)) {
         CTX.beginPath();
         CTX.strokeStyle = 'black';
         if (mouse_Left) {
-          CTX.lineWidth = broad_wid;
-          CTX.strokeStyle = '#f52';
+          CTX.lineWidth = width_broad;
+          CTX.strokeStyle = 'orangered';
         }
         CTX.moveTo(mousePOS.x, mousePOS.y);
         CTX.lineTo(b1.x, b1.y);
         CTX.stroke();
       }
-      CTX.lineWidth = narrow_wid;
+      //最后画球与球的连线
       CTX.beginPath();
+      CTX.lineWidth = width_narrow;
+      CTX.strokeStyle = 'snow';
       for (let j = i - 1; i != j && -1 < j; j--) {
         var b2 = BALLs[j];
-        if (sqr(len2) >= sqr2p(b1, b2)) {
+        if (sqr(len_short) >= sqr2p(b1, b2)) {
           CTX.moveTo(b1.x, b1.y);
           CTX.lineTo(b2.x, b2.y);
         }
       }
-      CTX.strokeStyle = 'white';
       CTX.stroke();
     }
   }
 }
-//关键帧
+
+//绘制关键帧，由底层到顶层绘制
 function FRAME() {
+  //清除旧帧
   CTX.clearRect(0, 0, CTX.width, CTX.height);
-  //绘制
-  PLOT();
+  //绘制新帧
+  //背景层
+  onBGIPlot();
+  //球体层
+  onBallPlot();
 }
-//将关键帧绘制动作集中于主函数
+
+//形成动画
 let ANIMATION = (timestamp, elapsed) => {
   //锁帧
   if (elapsed > 1000 / FPS) {

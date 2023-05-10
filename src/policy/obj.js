@@ -26,12 +26,12 @@ class Ball extends A {
    * @param {number} _angle 运动角
    * @param {string} _color 颜色
    */
-  constructor(ID, name, _size, _speed, _angle, _color) {
+  constructor(ID, name, _size, _x, _y, _angle, _speed, _color) {
     super(ID, name);
     this.show = true;
     this.r = _size;
-    this.y = rand(_size, CTX.height - 2 * _size);
-    this.x = rand(_size, CTX.width - 2 * _size);
+    this.x = _x;
+    this.y = _y;
     this.θ = _angle;
     this.v = _speed;
     this.vy = _speed * sin(_angle);
@@ -89,13 +89,13 @@ class Ball extends A {
     CTX.fill();
     if (DEBUG && deb_obj) {
       CTX.beginPath();
-      CTX.strokeStyle = 'yellow';
+      CTX.strokeStyle = 'orange';
       CTX.lineWidth = 2;
       CTX.moveTo(this.x, this.y);
       CTX.lineTo(this.x + this.r * cos(this.θ), this.y + this.r * sin(this.θ));
       CTX.stroke();
       CTX.beginPath();
-      CTX.fillStyle = 'white';
+      CTX.fillStyle = 'orange';
       CTX.fillText(
         `no.${this.ID}`, //, ${this.x.toFixed()} , ${this.y.toFixed()}
         this.x,

@@ -1,5 +1,6 @@
+//配置
+var CONFIG;
 //元素注册
-var AUTHOR = '若愚[RUOYU]';
 function Elem(id) {
   return document.getElementById(id);
 }
@@ -35,27 +36,38 @@ var DEBUG = false,
   deb_key = false, //按键调试
   deb_mouse = false, //鼠标调试
   deb_cmd = false, // 指令调试
-  deb_obj = false; //对象调试
+  deb_obj = false, //对象调试
+  deb_server = false; //服务器调试
 
 //galaxy常量
-var AREA = 1428000, //1700*840
-  FPS = 60,
+var WIDTH = 1703,
+  HEIGHT = 841,
+  FPS = 60, //帧数
   PI = Math.PI,
   SPEED = 15, //屏幕速度，结合PFS
   ZERO = 0.01,
-  WidthRatio = 1,
-  HeightRatio = 1,
-  AreaRatio = 1,
+  ANGLE = NaN, //光标角（相对x轴）
+  ratio_half = 0.5,
+  ratio_equal = 1,
+  ratio_mid = 1.5,
+  ratio_double = 2,
+  BALLs = [], //球集
+  ratio_x = 0, //光标横坐标比，相对(0,0)
+  ratio_y = 0, //光标纵坐标比
+  ratio_w = 1, //宽比
+  ratio_h = 1, //高比
   count = 20,
-  size = 24,
-  size_ratio = 2,
+  size = 30,
   speed = SPEED / FPS,
-  speed_ratio = 2,
   force = 30,
   acc = 1, //加速系数
   dec = 0.975, //阻力系数
-  angle = NaN,
-  len1 = 300, //光标范围
-  len2 = 200, //球体范围
-  broad_wid = 1, //宽线
-  narrow_wid = 0.5; //细线
+  len_short = 180, //球体范围
+  len_long = len_short * ratio_mid, //光标范围
+  width_narrow = 0.6, //细线
+  width_broad = width_narrow * ratio_double; //宽线
+
+//颜色
+var C0 = 'black',
+  C1 = 'white',
+  C3 = 'orangered';

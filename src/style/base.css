@@ -11,6 +11,7 @@
     --mid-opa: .6;
     --low-opa: .3;
     --bgc: lightblue;
+    /* 尺寸 */
     --full-cw: 100%;
     --full-sh: 100vh;
     /* 过渡速度 */
@@ -19,22 +20,22 @@
     --slow-tst: 1s;
     /* header */
     --h-full-sh: 100vh;
-    --h-bgi: radial-gradient(circle at 50% 50%, #cff 0, #9cf 50%);
+    --h-bgi: radial-gradient(circle at 50% 40%, lightcyan 0, skyblue 50%);
     /* major */
     --m-full-sh: 120vh;
-    --m-bgi: linear-gradient(135deg, #7DE2FC 0%, #B9B6E5 100%);
+    --m-bgi: linear-gradient(135deg, #7EF 0%, #BBE 100%);
     /* footer */
     --f-lr-width: 20vw;
     --f-height: 1.5vh;
     --f-height-hover: 4vh;
     --f-font-size: 20%;
-    --f-font-size-hover: 100%;
+    --f-font-size-hover: 90%;
     --f-bgc: #368;
-    --f-item-bgc: lightsteelblue;
-    --f-ltspc: 5px;
+    --f-item-bgc: lightcyan;
+    --f-ltspc: 6px;
     /* for components */
     /* 滚动条 */
-    --sb-width: 6px;
+    --sb-width: 5px;
     --sb-br: calc(var(--sb-width)/2);
     --sb-c0: white;
     --sb-c1: #999;
@@ -44,11 +45,11 @@
     --ib-bgc: var(--f-bgc);
     --ib-item-bgc: var(--f-item-bgc);
     --ib-item-c: black;
-    --ib-height: 8vh;
+    --ib-height: 8vmin;
     --ib-item-width: 10%;
     --ib-item-width-hover: 15%;
-    --ib-item-width-focus: 20%;
-    --ib-item-margin: 1vh;
+    --ib-item-width-focus: 25%;
+    --ib-item-margin: 1vmin;
     --ib-item-height: calc(var(--ib-height) - var(--ib-item-margin)*2);
     --ib-item-br: calc(var(--ib-item-height)/2);
     --ib-font-size: var(--ib-item-br);
@@ -57,8 +58,8 @@
     --ib-btn-img-active: url("../assets/search_active.svg");
 
     /* for pulse */
-    --core-r: 25vh;
-    --core-r-hover: 30vh;
+    --core-r: 25vmin;
+    --core-r-hover: 30vmin;
     --core-bgc: #478;
     --core-bgc-hover: #246;
 }
@@ -68,7 +69,7 @@ body {
     margin: 0;
     padding: 0;
     /* font-family: "方正兰亭超细"; */
-    -webkit-font-smoothing: antialiased;
+    /* -webkit-font-smoothing: antialiased; */
     background-color: var(--bgc);
     box-sizing: border-box;
     user-select: none;
@@ -77,7 +78,7 @@ body {
     -ms-user-select: none;
 }
 
-a {
+p {
     text-decoration: none;
     text-align: center;
     cursor: pointer;
@@ -86,7 +87,6 @@ a {
 #header {
     width: var(--full-cw);
     height: var(--h-full-sh);
-    /* padding: .1px 0; */
     background-image: var(--h-bgi);
 }
 
@@ -124,8 +124,9 @@ a {
     font-size: var(--f-font-size);
     /* font-weight: bold; */
     text-align: center;
+    text-overflow: ellipsis;
     line-height: var(--f-height-hover);
-    letter-spacing: var(--f-ltspc);
+    color: var(--f-bgc);
     /* cursor: default; */
     /*兼容IE11*/
     opacity: var(--low-opa);
@@ -141,4 +142,11 @@ a {
     line-height: var(--f-height-hover);
     font-size: var(--f-font-size-hover);
     color: var(--f-item-bgc);
+}
+
+
+@media only screen and (min-width: 800px) {
+    #footer {
+        letter-spacing: var(--f-ltspc);
+    }
 }

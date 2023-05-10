@@ -64,7 +64,7 @@ button {
 
 /* 导航条链接 */
 
-#indexbar a {
+#indexbar p {
     float: left;
     width: var(--ib-item-width);
     height: var(--ib-item-height);
@@ -81,7 +81,7 @@ button {
 
 /* 链接过渡 */
 
-#indexbar a:hover {
+#indexbar p:hover {
     width: var(--ib-item-width-hover);
 }
 
