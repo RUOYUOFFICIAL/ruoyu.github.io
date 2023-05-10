@@ -1,0 +1,19 @@
+{
+  "author": "若愚[RUOYU]",
+  "version": "1.0.0",
+  "prefix": ["`", "-", "."],
+  "Key": [
+    { "key": "cmd", "info": "cmd pattern on" },
+    { "key": "e", "info": "cmd pattern off" },
+    { "key": "q", "info": "cmd pattern off" },
+    { "key": "v", "info": "check out version" },
+    { "key": "h", "info": "get help" },
+    { "key": "rf", "info": "refresh page" },
+    { "key": "rl", "info": "reload resource" },
+    { "key": "top", "info": "go2 top" },
+    { "key": "btm", "info": "go2 bottom" },
+    { "key": "`", "info": "escape input(lose focus)" },
+    { "key": "c", "info": "clear input content" },
+    { "key": "g", "info": "game pattern on" }
+  ]
+}

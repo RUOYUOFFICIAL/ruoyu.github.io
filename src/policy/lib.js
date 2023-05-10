@@ -296,3 +296,13 @@ function ZoomRatio(type) {
   }
   return ret;
 }
+
+// 保存原始的 split 方法
+const originalSplit = String.prototype.split;
+// 重写 split 方法
+String.prototype.split = function (separator, limit) {
+  // 调用原始的 split 方法
+  const result = originalSplit.call(this, separator, limit);
+  // 过滤掉空字符
+  return result.filter((item) => item !== '');
+};

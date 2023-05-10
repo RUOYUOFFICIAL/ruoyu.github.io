@@ -1,17 +1,19 @@
+var arr = [];
 function main() {
-  fetch('./src/config')
+  fetch('./src/config.json')
     .then(function (response) {
       if (response.ok) {
-        return response.text();
+        return response.json();
       }
-      throw new Error('Network response was not ok.');
+      throw new Error('config not ok.');
     })
-    .then(function (text) {
-      // 处理jsonData
-      console.log('config ok\n' + text);
-      var year = new Date().getFullYear(),
-        AUTHOR = '若愚[RUOYU]';
-      ftext.innerHTML = `<b>&copy;${year}  &#64;${AUTHOR} ·</b>   <i>Design & Code</i>`;
+    .then(cfgJson => {
+      // 处理json
+      // console.log('config ok');
+      // console.log(text);
+      CONFIG = cfgJson;
+      var year = new Date().getFullYear();
+      ftext.innerHTML = `<b>&copy;${year}  &#64;${CONFIG.author} ·</b>   <i>Design & Code</i>`;
 
       //首次初始化
       Init(HEADER.scrollWidth, HEADER.scrollHeight);
@@ -33,7 +35,7 @@ function main() {
         );
       // console.log(BALLs);
       //回调动画
-      window.requestAnimationFrame((timestamp) => ANIMATION(timestamp, 0));
+      window.requestAnimationFrame(timestamp => ANIMATION(timestamp, 0));
     })
     .catch(function (error) {
       console.log(

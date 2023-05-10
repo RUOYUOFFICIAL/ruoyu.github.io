@@ -5,7 +5,7 @@
 //键盘事件
 //按键
 document.body.style.zoom = 'reset';
-window.onkeydown = (ev) => {
+window.onkeydown = ev => {
   //callee针对firefox
   var e = ev || window.event || arguments.callee.caller.arguments[0],
     ec = e.code, //code备用
@@ -49,7 +49,7 @@ window.onkeydown = (ev) => {
 };
 
 //弹键
-window.onkeyup = (ev) => {
+window.onkeyup = ev => {
   //callee针对firefox
   var e = ev || window.event || arguments.callee.caller.arguments[0],
     ec = e.code, //code备用
@@ -97,7 +97,7 @@ https://www.cnblogs.com/xiaobaiou/p/10731062.html
 //chrome 禁止ctrl+滚轮
 window.addEventListener(
   'mousewheel',
-  (ev) => {
+  ev => {
     var e = ev;
     if (DEBUG && deb_mouse) console.log(e);
     if (e.ctrlKey === true || e.metaKey) e.preventDefault();
@@ -108,7 +108,7 @@ window.addEventListener(
 //firefox禁止ctrl+滚轮
 window.addEventListener(
   'DOMMouseScroll',
-  (ev) => {
+  ev => {
     var e = ev;
     if (e.ctrlKey === true || e.metaKey) e.preventDefault();
   },
@@ -117,7 +117,7 @@ window.addEventListener(
 
 //仅限canvas 的鼠标事件
 //移入|移动事件
-GLX.onmouseenter = GLX.onmousemove = (ev) => {
+GLX.onmouseenter = GLX.onmousemove = ev => {
   mouseFOCUS = true;
   var e = ev;
   if (DEBUG && deb_mouse)
@@ -134,7 +134,7 @@ GLX.onmouseleave = () => {
   mouse_Right = false;
 };
 //按键事件
-GLX.onmousedown = (ev) => {
+GLX.onmousedown = ev => {
   var e = ev,
     eb = e.button;
   if (DEBUG && deb_mouse) console.log('M_DOWN:', eb);
@@ -153,7 +153,7 @@ GLX.onmousedown = (ev) => {
   }
 };
 //弹键事件
-GLX.onmouseup = (ev) => {
+GLX.onmouseup = ev => {
   var e = ev,
     eb = e.button;
   if (DEBUG && deb_mouse) console.log('M_UP:', eb);
@@ -174,7 +174,7 @@ GLX.onmouseup = (ev) => {
 
 //自定义事件
 //sticky
-window.onscroll = (ev) => {
+window.onscroll = ev => {
   var e = ev;
   // console.log(e);
   if (document.documentElement.scrollTop < HEADER.scrollHeight) {
