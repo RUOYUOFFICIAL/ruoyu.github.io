@@ -2,12 +2,12 @@
 // 为了减小计算机各部门的工作负担，各事件内部执行代码应尽可能少
 // 通常，只涉及信号量值变换，其他工作例如渲染、大量计算则放在主体代码中执行
 
-//键盘事件
+//全局键盘事件
 //按键
 document.body.style.zoom = 'reset';
 window.onkeydown = ev => {
   //callee针对firefox
-  var e = ev || window.event || arguments.callee.caller.arguments[0],
+  let e = ev || window.event || arguments.callee.caller.arguments[0],
     ec = e.code, //code备用
     ek = e.key;
   if (DEBUG && deb_key) console.log('K_DOWN:', ek);
@@ -31,10 +31,18 @@ window.onkeydown = ev => {
       key_D = true;
       break;
     case ' ':
+      if (!ipt_Actived()) e.preventDefault(); //避免页面滚动
       key_Space = true;
       break;
     case '`':
-      key_CONSOLE = !key_CONSOLE;
+      key_Console = !key_Console;
+      break;
+    case 'Enter':
+      if (!ipt_Actived()) search_ipt.focus();
+      else if (!deb_cmd && search_ipt.value === '') search_ipt.blur();
+      break;
+    case 'Escape':
+      if (ipt_Actived()) search_ipt.blur();
       break;
     case '-':
     case '_':
@@ -51,7 +59,7 @@ window.onkeydown = ev => {
 //弹键
 window.onkeyup = ev => {
   //callee针对firefox
-  var e = ev || window.event || arguments.callee.caller.arguments[0],
+  let e = ev || window.event || arguments.callee.caller.arguments[0],
     ec = e.code, //code备用
     ek = e.key;
   if (DEBUG && deb_key) console.log('K_UP:', ek);
@@ -72,14 +80,14 @@ window.onkeyup = ev => {
       key_Space = false;
       break;
     case '`':
-      key_CONSOLE = false;
+      // key_Console = false;
       break;
     default:
       break;
   }
 };
 
-//窗口事件
+//全局窗口事件
 //尺寸变化
 window.onresize = () => {
   if (DEBUG && deb_cmd) console.log('resize:', CTX.width, CTX.height);
@@ -89,37 +97,54 @@ window.onresize = () => {
   GLXInit(HEADER.scrollWidth, HEADER.scrollHeight);
 };
 
-//禁用事件
+//全局滚轮事件
 /*
 [小白鸥]关于js禁止浏览器缩放
 https://www.cnblogs.com/xiaobaiou/p/10731062.html
 */
-//chrome 禁止ctrl+滚轮
 window.addEventListener(
   'mousewheel',
   ev => {
-    var e = ev;
-    if (DEBUG && deb_mouse) console.log(e);
-    if (e.ctrlKey === true || e.metaKey) e.preventDefault();
+    if (ev.ctrlKey === true || ev.metaKey) {
+      ev.preventDefault();
+    }
   },
-  false
+  { passive: false }
 );
 
-//firefox禁止ctrl+滚轮
+//firefox
 window.addEventListener(
   'DOMMouseScroll',
   ev => {
-    var e = ev;
-    if (e.ctrlKey === true || e.metaKey) e.preventDefault();
+    if (ev.ctrlKey === true || ev.metaKey) {
+      ev.preventDefault();
+    }
   },
-  false
+  { passive: false }
 );
 
+//sticky
+window.onscroll = ev => {
+  let e = ev; // console.log(ratio_s);
+
+  scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+  if (ib_onTop()) {
+    if (!ipt_Actived()) indexbar.style.opacity = 'var(--low-opa)';
+  } else {
+    indexbar.style.opacity = 'var(--high-opa)';
+  }
+  // console.log(scrollTop);
+  core.style.top = `calc(40% + ${scrollTop * 0.85}px)`;
+  // console.log(core.style.top);
+};
+
+//画布事件
 //仅限canvas 的鼠标事件
 //移入|移动事件
 GLX.onmouseenter = GLX.onmousemove = ev => {
   mouseFOCUS = true;
-  var e = ev;
+  let e = ev;
   if (DEBUG && deb_mouse)
     console.log('M_ENTER|MOVE:(', e.offsetX, ',', e.offsetY, ')');
   mousePOS.x = e.offsetX;
@@ -135,7 +160,7 @@ GLX.onmouseleave = () => {
 };
 //按键事件
 GLX.onmousedown = ev => {
-  var e = ev,
+  let e = ev,
     eb = e.button;
   if (DEBUG && deb_mouse) console.log('M_DOWN:', eb);
   switch (eb) {
@@ -154,7 +179,7 @@ GLX.onmousedown = ev => {
 };
 //弹键事件
 GLX.onmouseup = ev => {
-  var e = ev,
+  let e = ev,
     eb = e.button;
   if (DEBUG && deb_mouse) console.log('M_UP:', eb);
   switch (eb) {
@@ -172,21 +197,25 @@ GLX.onmouseup = ev => {
   }
 };
 
-//自定义事件
-//sticky
-window.onscroll = ev => {
-  var e = ev;
-  // console.log(e);
-  if (document.documentElement.scrollTop < HEADER.scrollHeight) {
-    galaxy.style.display = 'block';
-    core.style.display = 'block';
-    indexbar.style.opacity = 'var(--high-opa)';
-  } else {
-    galaxy.style.display = 'none';
-    core.style.display = 'none';
-    indexbar.style.opacity = 'var(--low-opa)';
-  }
+//组件事件
+//导航栏位置事件
+function ib_onTop() {
+  return scrollTop <= 200;
+}
+//输入框焦点事件
+search_ipt.onblur = () => {
+  if (ib_onTop()) indexbar.style.opacity = 'var(--low-opa)';
 };
-// window.addEventListener('scroll', () => {
-//   // onBGIPlot();
-// });
+search_ipt.onfocus = () => {
+  indexbar.style.opacity = 'var(--high-opa)';
+};
+function ipt_Actived() {
+  return document.activeElement === search_ipt;
+}
+//按钮点击事件
+search_btn.onmousedown = () => {
+  if (!deb_cmd) setBGI(search_btn, 'search_active.svg');
+};
+search_btn.onmouseup = () => {
+  if (!deb_cmd) setBGI(search_btn, 'search.svg');
+};

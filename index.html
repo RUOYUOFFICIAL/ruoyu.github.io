@@ -3,12 +3,11 @@
 <html>
   <!--ead start-->
   <head>
-    <meta charset="UTF-8" content="IE=edge,chrome=1" />
-    <title>若愚</title>
-    <meta name="keywords" content="若愚" />
-    <link rel="stylesheet" type="text/css" href="./src/style/base.css" />
-    <link rel="stylesheet" type="text/css" href="./src/style/components.css" />
-    <link rel="stylesheet" type="text/css" href="./src/style/pulse.css" />
+    <meta
+      charset="UTF-8"
+      name="base"
+      content="IE=edge,chrome=1,width=device-width, initial-scale=1.0" />
+    <title></title>
     <base target="_self" />
   </head>
   <!--head end-->
@@ -18,32 +17,28 @@
     oncontextmenu="return false"
     ondragstart="return false"
     onselectstart="return false"
-    onselect="document.selection.empty()"
-    oncopy="document.selection.empty()"
     onbeforecopy="return false"
-    unselectable="on"
-    draggable="false"
-  >
+    draggable="false">
+    <!--indexbar start-->
+    <div id="indexbar">
+      <button id="search_btn" type="submit"></button>
+      <input id="search_ipt" type="text" placeholder="?" />
+      <!-- <p onClick="_2Route('page1.html')">@1</a> -->
+      <!-- <p onClick="_2Route('page2.html')">@2</a> -->
+    </div>
+    <!--indexbar end-->
     <!--blackhole start-->
     <div id="header">
       <!--Galaxy start-->
       <canvas id="galaxy" style="position: fixed; top: 0; z-index: 0"></canvas>
       <!--Galaxy end-->
       <div id="core" onClick="">
-        <div class="pulse" style="animation-delay: 0.3s"></div>
-        <div class="pulse" style="animation-delay: 1.3s"></div>
+        <div class="pulse" style="animation-delay: 0.2s"></div>
+        <div class="pulse" style="animation-delay: 1.2s"></div>
         <!-- <div class="pulse" style="animation-delay: 2.3s"></div> -->
       </div>
     </div>
     <!--blackhole end-->
-    <!--indexbar start-->
-    <div id="indexbar">
-      <button id="search_btn" type="submit"></button>
-      <input id="search_ipt" type="text" placeholder="搜索" />
-      <p onClick="_2Route('page1.html')">@1</a>
-      <p onClick="_2Route('page2.html')">@2</a>
-    </div>
-    <!--indexbar end-->
     <!--major start-->
     <div id="major">
       <!-- <div class="left" id="left">
@@ -67,12 +62,61 @@
   </body>
   <!--body end-->
   <!--script start-->
-  <script type="text/javascript" src="./src/policy/alpha.js"></script>
-  <script type="text/javascript" src="./src/policy/events.js"></script>
-  <script type="text/javascript" src="./src/policy/lib.js"></script>
-  <script type="text/javascript" src="./src/policy/obj.js"></script>
-  <script type="text/javascript" src="./src/policy/plot.js"></script>
-  <script type="text/javascript" src="./src/policy/main.js"></script>
+  <script>
+    var root = './src/';
+    function getPath(type, fname) {
+      let path = root;
+      switch (type) {
+        case 'js':
+          path += 'policy/';
+          break;
+        case 'img':
+          path += 'assets/';
+          break;
+        case 'page':
+          path += 'route/';
+          break;
+        case 'css':
+          path += 'style/';
+          break;
+        default:
+          break;
+      }
+      return path + fname;
+    }
+    cssNames = ['base', 'components', 'pulse'];
+    jsNames = ['alpha', 'events', 'lib', 'obj', 'plot', 'run'];
+    //引入脚本
+    function importFile(type, fname) {
+      let fullname = `${fname}.${type}`,
+        path = getPath(type, fullname);
+      switch (type) {
+        case 'css':
+          let link = document.createElement('link');
+          link.rel = 'stylesheet';
+          // link.type = 'text/css';
+          link.href = path;
+          document.head.appendChild(link);
+          break;
+        case 'js':
+          let script = document.createElement('script');
+          script.src = path;
+          document.documentElement.appendChild(script);
+          break;
+      }
+    }
+    //调用
+    var maxlen = Math.max(cssNames.length, jsNames.length),
+      minlen = Math.min(cssNames.length, jsNames.length);
+    for (let i = 0; i < maxlen; i++) {
+      if (i < minlen) {
+        importFile('css', cssNames[i]);
+        importFile('js', jsNames[i]);
+      } else if (cssNames.length > jsNames.length)
+        importFile('css', cssNames[i]);
+      else importFile('js', jsNames[i]);
+    }
+  </script>
   <!--script end-->
 </html>
 <!--html end-->

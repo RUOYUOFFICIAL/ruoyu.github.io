@@ -109,13 +109,13 @@ class Ball extends A {
    * @param {Ball} b 另一个球
    */
   collide_with(b) {
-    var theta = atan2p(this, b),
+    let theta = atan2p(this, b),
       theta1 = this.θ - theta,
       theta2 = b.θ - theta - PI,
       vs1 = this.v * cos(theta1),
       vs2 = b.v * cos(theta2); //向心速度
     if ((b.x - this.x) * (vs2 - vs1) >= 0) return; //碰撞检测,>=0表示不会碰撞
-    var m1 = sqr(this.r),
+    let m1 = sqr(this.r),
       m2 = sqr(b.r),
       dif = m2 - m1,
       sum = m2 + m1,
@@ -199,7 +199,7 @@ class goBall extends Ball {
    * 内动力
    */
   active_force() {
-    var θ = NaN,
+    let θ = NaN,
       fsin = 0,
       fcos = 0;
     //顺时针
@@ -222,7 +222,7 @@ class goBall extends Ball {
    * 外动力
    */
   external_force() {
-    var f = 0,
+    let f = 0,
       fsin,
       fcos;
     if (mouse_Left) f = sqrt2p(this, mousePos);
@@ -254,7 +254,7 @@ class goBall extends Ball {
       acc = 2;
       this.energy = this.energy < 0.01 ? this.energy - 0.01 : 0;
     }
-    var af = this.active_force(),
+    let af = this.active_force(),
       ef = this.external_force(),
       miu = acc * dec,
       multi_factor = this.level * miu,

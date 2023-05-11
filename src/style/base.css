@@ -5,6 +5,7 @@
     /* for base  */
     /* 纵层 */
     --zbtm: 0;
+    --zmid: 49;
     --ztop: 99;
     /* 透明度 */
     --high-opa: .9;
@@ -15,14 +16,14 @@
     --full-cw: 100%;
     --full-sh: 100vh;
     /* 过渡速度 */
-    --fast-tst: .3s;
+    --fast-tst: .2s;
     --mid-tst: .6s;
     --slow-tst: 1s;
     /* header */
-    --h-full-sh: 100vh;
+    --h-full-sh: var(--full-sh);
     --h-bgi: radial-gradient(circle at 50% 40%, lightcyan 0, skyblue 50%);
     /* major */
-    --m-full-sh: 120vh;
+    --m-full-sh: 100vh;
     --m-bgi: linear-gradient(135deg, #7EF 0%, #BBE 100%);
     /* footer */
     --f-lr-width: 20vw;
@@ -31,7 +32,7 @@
     --f-font-size: 20%;
     --f-font-size-hover: 90%;
     --f-bgc: #368;
-    --f-item-bgc: lightcyan;
+    --f-item-bgc: white;
     --f-ltspc: 6px;
     /* for components */
     /* 滚动条 */
@@ -49,11 +50,12 @@
     --ib-item-width: 10%;
     --ib-item-width-hover: 15%;
     --ib-item-width-focus: 25%;
-    --ib-item-margin: 1vmin;
+    --ib-item-margin: 1.5vmin;
     --ib-item-height: calc(var(--ib-height) - var(--ib-item-margin)*2);
     --ib-item-br: calc(var(--ib-item-height)/2);
     --ib-font-size: var(--ib-item-br);
-    --ib-tst: .2s;
+    /* --ib-tst: .2s; */
+    --ib-btn-bg-size: 80%;
     --ib-btn-img: url("../assets/search.svg");
     --ib-btn-img-active: url("../assets/search_active.svg");
 
@@ -85,6 +87,7 @@ p {
 }
 
 #header {
+    z-index: var(--zbtm);
     width: var(--full-cw);
     height: var(--h-full-sh);
     background-image: var(--h-bgi);
@@ -95,6 +98,7 @@ p {
 
 #major {
     /* margin: 0; */
+    z-index: var(--zbtm);
     position: relative;
     width: var(--full-cw);
     height: var(--m-full-sh);
@@ -104,6 +108,7 @@ p {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    /* opacity: var(--high-opa); */
     /*background-image: url("../res/center.gif");*/
 }
 

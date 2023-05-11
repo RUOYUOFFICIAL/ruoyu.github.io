@@ -1,19 +1,18 @@
 {
   "author": "若愚[RUOYU]",
   "version": "1.0.0",
-  "prefix": ["`", "-", "."],
-  "Key": [
-    { "key": "cmd", "info": "cmd pattern on" },
-    { "key": "e", "info": "cmd pattern off" },
-    { "key": "q", "info": "cmd pattern off" },
-    { "key": "v", "info": "check out version" },
-    { "key": "h", "info": "get help" },
-    { "key": "rf", "info": "refresh page" },
-    { "key": "rl", "info": "reload resource" },
-    { "key": "top", "info": "go2 top" },
-    { "key": "btm", "info": "go2 bottom" },
-    { "key": "`", "info": "escape input(lose focus)" },
-    { "key": "c", "info": "clear input content" },
-    { "key": "g", "info": "game pattern on" }
+  "prefix": ["`", "--"],
+  "CSet": [
+    { "key": ["v", "version"], "info": "check out version" },
+    { "key": ["h", "help"], "info": "get help" },
+    { "key": ["e", "exit"], "info": "cmd pattern off" },
+    { "key": ["q", "quit"], "info": "cmd pattern off" },
+    { "key": ["rf", "refresh"], "info": "refresh page" },
+    { "key": ["rl", "reload"], "info": "reload resource" },
+    { "key": ["top"], "info": "go2 top" },
+    { "key": ["btm", "bottom"], "info": "go2 bottom" },
+    { "key": ["esc", "escape"], "info": "escape input(lose focus)" },
+    { "key": ["c", "clear"], "info": "clear input content" },
+    { "key": ["g", "game"], "info": "start game" }
   ]
 }

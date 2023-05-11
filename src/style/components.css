@@ -45,7 +45,7 @@ button {
 /* 导航条 */
 
 #indexbar {
-    position: sticky;
+    position: fixed;
     top: 0;
     /* left: 0;
     right: 0; */
@@ -57,8 +57,9 @@ button {
     width: var(--full-cw);
     height: var(--ib-height);
     overflow: hidden;
-    background-color: var(--ib-bgc);
-    opacity: var(--high-opa);
+    /* background-color: var(--ib-bgc); */
+    opacity: var(--low-opa);
+    transition: var(--fast-tst);
 }
 
 
@@ -75,7 +76,7 @@ button {
     /* font-weight: bold; */
     background-color: var(--ib-item-bgc);
     color: var(--ib-item-c);
-    transition: var(--ib-tst);
+    transition: var(--fast-tst);
 }
 
 
@@ -98,19 +99,26 @@ button {
     font-size: var(--ib-font-size);
     color: var(--ib-bgc);
     background-color: var(--ib-item-bgc);
-    transition: var(--ib-tst);
+    transition: width var(--fast-tst);
 }
 
 #indexbar input:focus {
     width: var(--ib-item-width-focus);
 }
 
+#indexbar input::placeholder {
+    text-align: right;
+}
+
+/* 按钮 */
 #indexbar button {
     float: right;
     width: var(--ib-item-height);
     height: var(--ib-item-height);
     margin: var(--ib-item-margin);
     background: none;
+    background-size: var(--ib-btn-bg-size);
+    background-position: center;
     background-repeat: no-repeat;
     background-image: var(--ib-btn-img);
     cursor: pointer;

@@ -17,7 +17,9 @@ var HEADER = Elem('header'),
   ftext = Elem('ftext');
 
 //事件量
-var mousePOS = { x: 0, y: 0 },
+var duration = 300, //过渡时间,单位ms
+  carousel_dis = 100,
+  mousePOS = { x: 0, y: 0 },
   mouseFOCUS = false,
   mouse_Left = false,
   mouse_Mid = false,
@@ -47,6 +49,7 @@ var WIDTH = 1703,
   SPEED = 15, //屏幕速度，结合PFS
   ZERO = 0.01,
   ANGLE = NaN, //光标角（相对x轴）
+  scrollTop = 0, //滚动条位置（相对顶端）
   ratio_half = 0.5,
   ratio_equal = 1,
   ratio_mid = 1.5,

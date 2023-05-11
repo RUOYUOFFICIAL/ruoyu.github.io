@@ -1,3 +1,4 @@
+//计算或数学类
 /**
  * 获取随机数
  * @param {number} val 基础量
@@ -15,7 +16,7 @@ function rand(val, min, max) {
  * @returns 返回对应随机类型
  */
 function randType(type) {
-  var ret;
+  let ret;
   switch (type) {
     case 'size': //随机大小
       ret = rand(size, ratio_equal, ratio_double);
@@ -221,23 +222,23 @@ function atan2p(p1, p2) {
  * @param {*} b 基础量2
  */
 function swap(a, b) {
-  var t = a;
+  let t = a;
   a = b;
   b = t;
 }
 
+//功能类
 /**
  *路由转url
  * @param {string} route
  * @param {boolean} delay
  * @returns 路由对应的URL
  */
-function route2url(route, delay) {
-  var path = './src/route/';
-  if (delay) return `\'${path}${route}\'`;
-  else return path + route;
-}
-
+// function route2url(route, delay) {
+//   let path = './src/route/';
+//   if (delay) return `\'${path}${route}\'`;
+//   else return path + route;
+// }
 /**
  * 跳转至url
  * @param {string} url 路径
@@ -251,7 +252,7 @@ function _2URL(url) {
  * @param {string} route 路由
  */
 function _2Route(route) {
-  _2URL(route2url(route, false));
+  _2URL(getPath('page', route));
 }
 
 /**
@@ -269,7 +270,7 @@ function Dlay2URL(url, time) {
  * @param {number} time 时延，单位ms
  */
 function DlayRoute(route, time) {
-  Dlay2URL(route2url(route, true), time);
+  Dlay2URL(getPath('page', route), time);
 }
 
 /**
@@ -278,7 +279,7 @@ function DlayRoute(route, time) {
  * @returns 对应类型的放缩系数
  */
 function ZoomRatio(type) {
-  var ret;
+  let ret;
   switch (type) {
     case 'w':
       ret = ratio_w;
@@ -297,6 +298,42 @@ function ZoomRatio(type) {
   return ret;
 }
 
+//修改背景图片
+function setBGI(id, iname) {
+  let url = `url("${getPath('img', iname)}")`;
+  id.style.backgroundImage = url;
+}
+//平滑滚动
+function smoothScrollTo(targetPosition, duration) {
+  let startPosition = window.pageYOffset,
+    distance = targetPosition - startPosition,
+    startTime = null;
+
+  function scrollAnimation(currentTime) {
+    if (startTime === null) {
+      startTime = currentTime;
+    }
+
+    let elapsed = currentTime - startTime,
+      ease = Math.easeInOut(elapsed, duration),
+      scrollPosition = startPosition + distance * ease;
+    window.scrollTo(0, scrollPosition);
+
+    if (elapsed < duration) {
+      requestAnimationFrame(scrollAnimation);
+    }
+  }
+
+  Math.easeInOut = function (t, duration) {
+    t /= duration / 2;
+    if (t < 1) return 0.5 * t * t;
+    t--;
+    return -0.5 * (t * (t - 2) - 1);
+  };
+
+  requestAnimationFrame(scrollAnimation);
+}
+
 // 保存原始的 split 方法
 const originalSplit = String.prototype.split;
 // 重写 split 方法
@@ -304,5 +341,149 @@ String.prototype.split = function (separator, limit) {
   // 调用原始的 split 方法
   const result = originalSplit.call(this, separator, limit);
   // 过滤掉空字符
-  return result.filter((item) => item !== '');
+  return result.filter(item => item !== '');
 };
+
+//CMD库，所有命令函数将以$开头命名
+/**
+ * 执行指令
+ * @param {string} text 指令
+ */
+function TryCMD(text) {
+  if (!text) return; //空文本直接返回
+  //模式不相关
+  let len = text.length,
+    suffixText = text.substring(len - 2, len);
+  switch (suffixText) {
+    case '`c': //相当于clear
+      $c(); //清空后，下文不再生效，返回
+      return;
+    case '``': //相当于esc
+      search_ipt.value = text.substring(0, len - 2);
+      text = search_ipt.value; //及时更新文本
+      $esc(); //失焦后，下文不需要生效，返回
+      return;
+  }
+  // console.log(2, text);
+  //模式相关
+  if (deb_cmd) {
+    //指令模式，严格匹配
+    let ctem = CONFIG.CSet.find(item => item.key.includes(text)) || null;
+    if (!ctem) {
+      switch (text) {
+        case 'cmd':
+          console.log('cmd pattern already on');
+          $c();
+          break;
+        default:
+          console.log(`invalid command: ${text}`);
+          break;
+      }
+    } else {
+      window[`\$${ctem.key[0]}`]();
+      $c();
+    }
+  } else {
+    //非指令模式，宽松匹配
+    switch (text.toLowerCase()) {
+      case 'cmd':
+        $cmd();
+        $c();
+        break;
+      default: //保留其他
+        break;
+    }
+  }
+}
+//根据指令名生成含义（区分大小写）
+/**
+ * 开启指令模式
+ */
+function $cmd() {
+  deb_cmd = true;
+  setBGI(search_btn, 'cmd.svg');
+  search_btn.style.cursor = 'default';
+  search_ipt.placeholder = '<';
+  // console.log(deb_cmd);
+}
+/**
+ * 关闭指令模式
+ */
+var $e = ($q = () => {
+  deb_cmd = false;
+  setBGI(search_btn, 'search.svg');
+  search_btn.style.cursor = 'pointer';
+  search_ipt.placeholder = '?';
+  // console.log(deb_cmd);
+});
+/**
+ * 查看版本
+ * @returns 版本号
+ */
+function $v() {
+  let ver = `version: ${CONFIG.version}`;
+  console.log(ver);
+  return ver;
+}
+/**
+ * 获取帮助
+ * @returns 帮助文本
+ */
+function $h() {
+  let keys = Object.keys(CONFIG.CSet[0]),
+    len1 = 12,
+    len2 = 25,
+    gapText = '| ',
+    tableText = `${keys[0].toUpperCase().padEnd(len1)}${gapText}${keys[1]
+      .toUpperCase()
+      .padEnd(len2)}\n`,
+    tableWidth = tableText.length,
+    rowText = '';
+  tableText += '—'.repeat(tableWidth) + '\n';
+  CONFIG.CSet.forEach(item => {
+    rowText = `${item.key.toString().padEnd(len1)}${gapText}${item.info.padEnd(
+      len2
+    )}\n`;
+    tableText += rowText;
+  });
+  console.log(tableText);
+  return tableText;
+}
+/**
+ * 刷新页面
+ */
+function $rf() {
+  location.reload();
+}
+/**
+ * 重载资源
+ */
+function $rl() {}
+/**
+ * 滑动至顶部
+ */
+function $top() {
+  smoothScrollTo(0, duration);
+}
+/**
+ * 滑动至底部
+ */
+function $btm() {
+  smoothScrollTo(document.body.clientHeight, duration);
+}
+/**
+ * 输入框退焦
+ */
+function $esc() {
+  search_ipt.blur();
+}
+/**
+ * 清空输入文本
+ */
+function $c() {
+  search_ipt.value = '';
+}
+/**
+ * 启动游戏
+ */
+function $g() {}
