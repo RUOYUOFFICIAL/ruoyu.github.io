@@ -1,4 +1,3 @@
-var arr = [];
 function main() {
   fetch('./src/config.json')
     .then(function (response) {
@@ -32,32 +31,6 @@ function main() {
       //   console.log('name:', name);
       //   console.log('content:', content);
       // });
-
-      //搜索框、命令行事件必须等待配置文件加载完成后才能挂钩
-      //搜索框事件
-      search_ipt.onkeyup = ev => {
-        let e = ev,
-          ek = e.key;
-        if (DEBUG && deb_key) console.log('IPT_K_UP:', ek);
-
-        switch (ek) {
-          case 'Enter':
-            if (ipt_Actived) TryCMD(search_ipt.value);
-            break;
-          case 'ArrowUp':
-            console.log('↑');
-            break;
-          case 'ArrowDown':
-            console.log('↓');
-            break;
-          case 'Tab':
-            e.preventDefault(); //避免失焦
-            console.log('→');
-            break;
-          default:
-            break;
-        }
-      };
     })
     .catch(function (error) {
       console.log(
@@ -89,5 +62,17 @@ function main() {
   window.requestAnimationFrame(timestamp => ANIMATION(timestamp, 0));
 }
 
-//运行
-main();
+window.onload = () => {
+  //页面资源加载完成后，挂载组件事件函数
+  GLX.onmouseenter = GLX.onmousemove = ev => glx_mEnter(ev);
+  GLX.onmouseleave = ev => glx_mLeave(ev);
+  GLX.onmousedown = ev => glx_mDown(ev);
+  GLX.onmouseup = ev => glx_mUp(ev);
+  search_ipt.onblur = ev => ipt_Blur(ev);
+  search_ipt.onfocus = ev => ipt_Focus(ev);
+  search_ipt.onkeyup = ev => ipt_kUp(ev);
+  search_btn.onmousedown = ev => btn_mDown(ev);
+  search_btn.onmouseup = ev => btn_mUp(ev);
+  //运行
+  main();
+};

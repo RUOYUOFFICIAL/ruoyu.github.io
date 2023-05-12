@@ -298,11 +298,6 @@ function ZoomRatio(type) {
   return ret;
 }
 
-//修改背景图片
-function setBGI(id, iname) {
-  let url = `url("${getPath('img', iname)}")`;
-  id.style.backgroundImage = url;
-}
 //平滑滚动
 function smoothScrollTo(targetPosition, duration) {
   let startPosition = window.pageYOffset,
@@ -343,6 +338,15 @@ String.prototype.split = function (separator, limit) {
   // 过滤掉空字符
   return result.filter(item => item !== '');
 };
+
+function setBGI(id, fname) {
+  // console.log(fname, assets[0].fname);
+  let obj = assets.find(item => item.fname === fname);
+  // console.log(obj);
+  let url = `url(\'${obj.path}\')`;
+  // console.log(obj);
+  id.style.backgroundImage = url;
+}
 
 //CMD库，所有命令函数将以$开头命名
 /**
@@ -469,7 +473,7 @@ function $top() {
  * 滑动至底部
  */
 function $btm() {
-  smoothScrollTo(document.body.clientHeight, duration);
+  smoothScrollTo(document.body.clientHeight - window.innerHeight, duration);
 }
 /**
  * 输入框退焦

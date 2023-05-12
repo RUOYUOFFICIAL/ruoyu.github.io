@@ -134,7 +134,7 @@ let ANIMATION = (timestamp, elapsed) => {
     FRAME();
     elapsed = 0;
   }
-  window.requestAnimationFrame((_timestamp) =>
+  window.requestAnimationFrame(_timestamp =>
     ANIMATION(_timestamp, elapsed + _timestamp - timestamp)
   );
 };

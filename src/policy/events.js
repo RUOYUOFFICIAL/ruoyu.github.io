@@ -96,7 +96,6 @@ window.onresize = () => {
   //重置绘画配置，窗口尺寸瞬间改变可能导致尺寸未及时同步
   GLXInit(HEADER.scrollWidth, HEADER.scrollHeight);
 };
-
 //全局滚轮事件
 /*
 [小白鸥]关于js禁止浏览器缩放
@@ -129,7 +128,7 @@ window.onscroll = ev => {
 
   scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-  if (ib_onTop()) {
+  if (ib2Top('top')) {
     if (!ipt_Actived()) indexbar.style.opacity = 'var(--low-opa)';
   } else {
     indexbar.style.opacity = 'var(--high-opa)';
@@ -139,27 +138,30 @@ window.onscroll = ev => {
   // console.log(core.style.top);
 };
 
+//组件事件,所有组件事件应当在脚本加载完成后再统一挂载
+//否则可能遇到组件不存在、无法访问的问题
+
 //画布事件
-//仅限canvas 的鼠标事件
+//仅限canvas 的事件
 //移入|移动事件
-GLX.onmouseenter = GLX.onmousemove = ev => {
+function glx_mEnter(ev) {
   mouseFOCUS = true;
   let e = ev;
   if (DEBUG && deb_mouse)
     console.log('M_ENTER|MOVE:(', e.offsetX, ',', e.offsetY, ')');
   mousePOS.x = e.offsetX;
   mousePOS.y = e.offsetY;
-};
+}
 //离开事件
-GLX.onmouseleave = () => {
+function glx_mLeave() {
   if (DEBUG && deb_mouse) console.log('M_LEAVE');
   mouseFOCUS = false;
   mouse_Left = false;
   mouse_Mid = false;
   mouse_Right = false;
-};
+}
 //按键事件
-GLX.onmousedown = ev => {
+function glx_mDown(ev) {
   let e = ev,
     eb = e.button;
   if (DEBUG && deb_mouse) console.log('M_DOWN:', eb);
@@ -176,9 +178,9 @@ GLX.onmousedown = ev => {
     default:
       break;
   }
-};
+}
 //弹键事件
-GLX.onmouseup = ev => {
+function glx_mUp(ev) {
   let e = ev,
     eb = e.button;
   if (DEBUG && deb_mouse) console.log('M_UP:', eb);
@@ -195,27 +197,70 @@ GLX.onmouseup = ev => {
     default:
       break;
   }
-};
-
-//组件事件
-//导航栏位置事件
-function ib_onTop() {
-  return scrollTop <= 200;
 }
-//输入框焦点事件
-search_ipt.onblur = () => {
-  if (ib_onTop()) indexbar.style.opacity = 'var(--low-opa)';
-};
-search_ipt.onfocus = () => {
-  indexbar.style.opacity = 'var(--high-opa)';
-};
+
+//获取输入框激活状态
 function ipt_Actived() {
   return document.activeElement === search_ipt;
 }
+//输入框焦点事件
+function ipt_Blur() {
+  if (ib2Top('top')) indexbar.style.opacity = 'var(--low-opa)';
+}
+function ipt_Focus() {
+  indexbar.style.opacity = 'var(--high-opa)';
+}
+//输入框按键
+function ipt_kUp(ev) {
+  let e = ev,
+    ek = e.key;
+  if (DEBUG && deb_key) console.log('IPT_K_UP:', ek);
+
+  switch (ek) {
+    case 'Enter':
+      if (ipt_Actived) TryCMD(search_ipt.value);
+      break;
+    case 'ArrowUp':
+      console.log('↑');
+      break;
+    case 'ArrowDown':
+      console.log('↓');
+      break;
+    case 'Tab':
+      e.preventDefault(); //避免失焦
+      console.log('→');
+      break;
+    default:
+      break;
+  }
+}
+
 //按钮点击事件
-search_btn.onmousedown = () => {
-  if (!deb_cmd) setBGI(search_btn, 'search_active.svg');
-};
-search_btn.onmouseup = () => {
+function btn_mDown() {
+  if (deb_cmd) return;
+  if (ib2Top('mid')) setBGI(search_btn, 'search_active_black.svg');
+  else setBGI(search_btn, 'search_active.svg');
+}
+function btn_mUp() {
   if (!deb_cmd) setBGI(search_btn, 'search.svg');
-};
+}
+
+//导航栏位置事件
+/**
+ * 判断滚动条是否过某位置
+ * @param {string} type 标记
+ * @returns true或false
+ */
+function ib2Top(type) {
+  let top;
+  switch (type) {
+    case 'top':
+      top = 200;
+      break;
+    case 'mid':
+    case 'center':
+      top = window.innerHeight;
+      break;
+  }
+  return scrollTop <= top;
+}

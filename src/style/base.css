@@ -27,10 +27,10 @@
     --m-bgi: linear-gradient(135deg, #7EF 0%, #BBE 100%);
     /* footer */
     --f-lr-width: 20vw;
-    --f-height: 1.5vh;
-    --f-height-hover: 4vh;
-    --f-font-size: 20%;
-    --f-font-size-hover: 90%;
+    --f-height: 1.5vmin;
+    --f-height-hover: 4vmin;
+    --f-font-size: 50%;
+    --f-font-size-hover: 80%;
     --f-bgc: #368;
     --f-item-bgc: white;
     --f-ltspc: 6px;

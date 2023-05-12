@@ -1,8 +1,13 @@
 //配置
 var CONFIG;
 //元素注册
+/**
+ * 根据id获取元素
+ * @param {string} id
+ * @returns 元素
+ */
 function Elem(id) {
-  return document.getElementById(id);
+  return document.getElementById(id) || null;
 }
 
 var HEADER = Elem('header'),

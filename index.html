@@ -64,16 +64,19 @@
   <!--script start-->
   <script>
     var root = './src/';
-    function getPath(type, fname) {
+    function getParentPath(type) {
       let path = root;
       switch (type) {
         case 'js':
           path += 'policy/';
           break;
-        case 'img':
+        case 'png':
+        case 'svg':
+        case 'jpg':
+        case 'json':
           path += 'assets/';
           break;
-        case 'page':
+        case 'html':
           path += 'route/';
           break;
         case 'css':
@@ -82,15 +85,41 @@
         default:
           break;
       }
-      return path + fname;
+      return path;
     }
-    cssNames = ['base', 'components', 'pulse'];
-    jsNames = ['alpha', 'events', 'lib', 'obj', 'plot', 'run'];
+    //css和js的文件名必须按先后顺序存放，其他文件无所谓
+    var fileNames = [
+        //css
+        'base.css',
+        'components.css',
+        'pulse.css',
+        //js
+        'alpha.js',
+        'events.js',
+        'lib.js',
+        'obj.js',
+        'plot.js',
+        'main.js',
+        //other
+        'cmd.svg',
+        'search.svg',
+        'search_active.svg',
+        'search_active_black.svg',
+      ],
+      assets = [];
     //引入脚本
-    function importFile(type, fname) {
-      let fullname = `${fname}.${type}`,
-        path = getPath(type, fullname);
+    function importFile(fname) {
+      let type = fname.split('.').pop(),
+        path = getParentPath(type) + fname;
       switch (type) {
+        case 'svg':
+        case 'png':
+        case 'jpg':
+          let img = new Image();
+          img.src = getParentPath(fname);
+          assets.push({ fname, path });
+          img = null;
+          break;
         case 'css':
           let link = document.createElement('link');
           link.rel = 'stylesheet';
@@ -101,21 +130,15 @@
         case 'js':
           let script = document.createElement('script');
           script.src = path;
+          script.defer = true;
+          script.async = true;
           document.documentElement.appendChild(script);
           break;
       }
     }
     //调用
-    var maxlen = Math.max(cssNames.length, jsNames.length),
-      minlen = Math.min(cssNames.length, jsNames.length);
-    for (let i = 0; i < maxlen; i++) {
-      if (i < minlen) {
-        importFile('css', cssNames[i]);
-        importFile('js', jsNames[i]);
-      } else if (cssNames.length > jsNames.length)
-        importFile('css', cssNames[i]);
-      else importFile('js', jsNames[i]);
-    }
+    for (let i = 0; i < fileNames.length; i++) importFile(fileNames[i]);
+    // console.log(fileNames.length, assets);
   </script>
   <!--script end-->
 </html>
