@@ -11,7 +11,7 @@ function main() {
       // console.log(text);
       CONFIG = cfgJson;
       // console.log('config ok\nauthor:', CONFIG.author);
-      let year = new Date().getFullYear(),
+      let year = DATE.getFullYear(),
         author = CONFIG.author,
         meta = document.querySelector("meta[name='base']"),
         attr = meta.getAttribute('content');
@@ -70,7 +70,8 @@ window.onload = () => {
   GLX.onmouseup = ev => glx_mUp(ev);
   search_ipt.onblur = ev => ipt_Blur(ev);
   search_ipt.onfocus = ev => ipt_Focus(ev);
-  search_ipt.onkeyup = ev => ipt_kUp(ev);
+  search_ipt.onkeydown = ev => ipt_KDown(ev);
+  search_ipt.onkeyup = ev => ipt_KUp(ev);
   search_btn.onmousedown = ev => btn_mDown(ev);
   search_btn.onmouseup = ev => btn_mUp(ev);
   //运行

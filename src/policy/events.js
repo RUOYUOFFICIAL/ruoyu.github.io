@@ -48,7 +48,8 @@ window.onkeydown = ev => {
     case '_':
     case '=':
     case '+':
-      //阻止页面放缩
+    case 'f':
+      //阻止页面放缩以及页面搜索
       if (e.ctrlKey || e.metaKey) e.preventDefault();
       break;
     default:
@@ -95,6 +96,8 @@ window.onresize = () => {
   reBALLs();
   //重置绘画配置，窗口尺寸瞬间改变可能导致尺寸未及时同步
   GLXInit(HEADER.scrollWidth, HEADER.scrollHeight);
+  //改变窗口后立马画帧，否则会造成画面空缺造成闪屏
+  FRAME();
 };
 //全局滚轮事件
 /*
@@ -211,14 +214,28 @@ function ipt_Focus() {
   indexbar.style.opacity = 'var(--high-opa)';
 }
 //输入框按键
-function ipt_kUp(ev) {
+function ipt_KDown(ev) {
+  let e = ev,
+    ek = e.key;
+  if (DEBUG && deb_key) console.log('IPT_K_DOWN:', ek);
+  switch (ek) {
+    case 'Tab':
+      e.preventDefault(); //避免失焦
+      console.log('→');
+      break;
+  }
+}
+function ipt_KUp(ev) {
   let e = ev,
     ek = e.key;
   if (DEBUG && deb_key) console.log('IPT_K_UP:', ek);
 
   switch (ek) {
     case 'Enter':
-      if (ipt_Actived) TryCMD(search_ipt.value);
+      if (ipt_Actived) {
+        HISTORY += TryEXE(search_ipt.value);
+        // console.log(REQUEST);
+      }
       break;
     case 'ArrowUp':
       console.log('↑');
@@ -226,10 +243,7 @@ function ipt_kUp(ev) {
     case 'ArrowDown':
       console.log('↓');
       break;
-    case 'Tab':
-      e.preventDefault(); //避免失焦
-      console.log('→');
-      break;
+
     default:
       break;
   }

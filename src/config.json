@@ -1,18 +1,55 @@
 {
-  "author": "若愚[RUOYU]",
+  "author": "若愚 [RUOYU]",
   "version": "1.0.0",
-  "prefix": ["`", "--"],
-  "CSet": [
-    { "key": ["v", "version"], "info": "check out version" },
-    { "key": ["h", "help"], "info": "get help" },
-    { "key": ["e", "exit"], "info": "cmd pattern off" },
-    { "key": ["q", "quit"], "info": "cmd pattern off" },
-    { "key": ["rf", "refresh"], "info": "refresh page" },
-    { "key": ["rl", "reload"], "info": "reload resource" },
-    { "key": ["top"], "info": "go2 top" },
-    { "key": ["btm", "bottom"], "info": "go2 bottom" },
-    { "key": ["esc", "escape"], "info": "escape input(lose focus)" },
-    { "key": ["c", "clear"], "info": "clear input content" },
-    { "key": ["g", "game"], "info": "start game" }
-  ]
+  "KeySet": {
+    "Base": {
+      "tag": "_",
+      "prefix": "`",
+      "keys": [
+        {
+          "key": ["e", "esc", "escape"],
+          "info": ["escape input", "input escaped | blurred"]
+        },
+        {
+          "key": ["c", "clear"],
+          "info": ["clear input content", "input cleared"]
+        }
+      ]
+    },
+    "!CMD": {
+      "tag": "",
+      "prefix": ">",
+      "keys": [
+        {
+          "key": ["cmd", "c"],
+          "info": ["turn on cmd pattern", "cmd pattern on"]
+        }
+      ]
+    },
+    "CMD": {
+      "tag": "$",
+      "prefix": "",
+      "keys": [
+        { "key": ["v", "version"], "info": ["check out version"] },
+        { "key": ["h", "help"], "info": ["get help"] },
+        {
+          "key": ["e", "exit", "q", "quit"],
+          "info": ["turn off cmd pattern", "cmd pattern off"]
+        },
+        { "key": ["rf", "refresh"], "info": ["refresh page"] },
+        {
+          "key": ["rl", "reload"],
+          "info": ["reload resource", "resource reloaded"]
+        },
+        { "key": ["top"], "info": ["go2 top", "on top"] },
+        { "key": ["btm", "bottom"], "info": ["go2 bottom", "on bottom"] },
+        {
+          "key": ["cls", "clears"],
+          "info": ["clear input history", "input history cleared"]
+        },
+        { "key": ["g", "game"], "info": ["start game", "game started"] },
+        { "key": ["dt", "datetime"], "info": ["show datetime"] }
+      ]
+    }
+  }
 }

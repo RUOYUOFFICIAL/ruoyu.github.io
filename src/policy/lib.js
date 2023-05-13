@@ -298,7 +298,11 @@ function ZoomRatio(type) {
   return ret;
 }
 
-//平滑滚动
+/**
+ * 平滑滚动
+ * @param {*} targetPosition 目标位置
+ * @param {*} duration 滚动时间
+ */
 function smoothScrollTo(targetPosition, duration) {
   let startPosition = window.pageYOffset,
     distance = targetPosition - startPosition,
@@ -331,14 +335,26 @@ function smoothScrollTo(targetPosition, duration) {
 
 // 保存原始的 split 方法
 const originalSplit = String.prototype.split;
-// 重写 split 方法
+
+/**
+ * 重写字符串split 方法，去除空字符
+ * @param {string|RegExp} separator 分隔符
+ * @param {*} limit 限制数量
+ * @returns 分割后的若干子串
+ */
 String.prototype.split = function (separator, limit) {
   // 调用原始的 split 方法
+  if (this.indexOf(separator) === -1) return [];
   const result = originalSplit.call(this, separator, limit);
   // 过滤掉空字符
   return result.filter(item => item !== '');
 };
 
+/**
+ * 设置背景图
+ * @param {string} id 元素id
+ * @param {string} fname 图片全名（包含后缀)
+ */
 function setBGI(id, fname) {
   // console.log(fname, assets[0].fname);
   let obj = assets.find(item => item.fname === fname);
@@ -348,68 +364,85 @@ function setBGI(id, fname) {
   id.style.backgroundImage = url;
 }
 
-//CMD库，所有命令函数将以$开头命名
 /**
- * 执行指令
+ * 执行单一指令
  * @param {string} text 指令
  */
-function TryCMD(text) {
-  if (!text) return; //空文本直接返回
-  //模式不相关
-  let len = text.length,
-    suffixText = text.substring(len - 2, len);
-  switch (suffixText) {
-    case '`c': //相当于clear
-      $c(); //清空后，下文不再生效，返回
-      return;
-    case '``': //相当于esc
-      search_ipt.value = text.substring(0, len - 2);
-      text = search_ipt.value; //及时更新文本
-      $esc(); //失焦后，下文不需要生效，返回
-      return;
-  }
-  // console.log(2, text);
-  //模式相关
-  if (deb_cmd) {
-    //指令模式，严格匹配
-    let ctem = CONFIG.CSet.find(item => item.key.includes(text)) || null;
-    if (!ctem) {
-      switch (text) {
-        case 'cmd':
-          console.log('cmd pattern already on');
-          $c();
-          break;
-        default:
-          console.log(`invalid command: ${text}`);
-          break;
-      }
-    } else {
-      window[`\$${ctem.key[0]}`]();
-      $c();
-    }
+function TryEXE(text) {
+  if (!text) return ''; //空文本直接返回
+  REQUEST.add(text);
+  let tmp,
+    ret = typeEXE('Base', text);
+  if (ret !== 'Base') return $dt('t') + ret + '\n';
+  else ret = '';
+  if (!deb_cmd) {
+    tmp = typeEXE('!CMD', text);
+    if (tmp === '!CMD') tmp = 'normal text: ' + text;
   } else {
-    //非指令模式，宽松匹配
-    switch (text.toLowerCase()) {
-      case 'cmd':
-        $cmd();
-        $c();
-        break;
-      default: //保留其他
-        break;
-    }
+    tmp = typeEXE('CMD', text);
+    if (tmp === 'CMD') tmp = 'invalid command: ' + text;
   }
+  ret += tmp;
+  // console.log('tag', ret);
+  return $dt('t') + ret + '\n';
 }
-//根据指令名生成含义（区分大小写）
+
+function typeEXE(type, text) {
+  let set = CONFIG.KeySet[type],
+    tag = set.tag,
+    gap = set.prefix;
+  switch (type) {
+    case 'Base':
+    case '!CMD':
+      let sptext = text.split(gap);
+      text = sptext.pop() || '';
+      if (type === 'Base' && ['e', 'esc', 'escape'].includes(text))
+        search_ipt.value = sptext.toString().replaceAll(',', gap);
+      break;
+    case 'CMD':
+      break;
+  }
+  let ktem =
+    set.keys.find(item => item.key.includes(text.toLowerCase())) || null;
+  if (!ktem) return type;
+  // console.log(text);
+  if (type != 'Base') _c();
+  let ret = window[`${tag}${ktem.key[0]}`]();
+  // console.log(ktem.info[1] || ret);
+  return ktem.info[1] || ret;
+}
+//-----------------非指令模式、普通模式
+//普通执行函数库，均以_开头命名
 /**
  * 开启指令模式
  */
-function $cmd() {
+function cmd() {
+  if (deb_cmd) return;
   deb_cmd = true;
   setBGI(search_btn, 'cmd.svg');
   search_btn.style.cursor = 'default';
   search_ipt.placeholder = '<';
+  _c();
   // console.log(deb_cmd);
 }
+/**
+ * 清空输入文本
+ */
+function _c() {
+  search_ipt.value = '';
+}
+/**
+ * 输入框退焦
+ */
+function _e() {
+  //失焦必须挂钩keyup事件
+  search_ipt.blur();
+}
+
+//------------------------指令模式
+//CMD执行函数库，均以$开头命名
+//根据指令名生成含义（区分大小写）
+
 /**
  * 关闭指令模式
  */
@@ -426,7 +459,7 @@ var $e = ($q = () => {
  */
 function $v() {
   let ver = `version: ${CONFIG.version}`;
-  console.log(ver);
+  // console.log(ver);
   return ver;
 }
 /**
@@ -434,23 +467,23 @@ function $v() {
  * @returns 帮助文本
  */
 function $h() {
-  let keys = Object.keys(CONFIG.CSet[0]),
-    len1 = 12,
-    len2 = 25,
+  let keys = CONFIG.KeySet['CMD'].keys,
+    subkeys = Object.keys(keys[0]),
     gapText = '| ',
-    tableText = `${keys[0].toUpperCase().padEnd(len1)}${gapText}${keys[1]
+    len1 = 15,
+    len2 = 25 - gapText.length,
+    tableText = `\n${subkeys[0]
       .toUpperCase()
-      .padEnd(len2)}\n`,
-    tableWidth = tableText.length,
+      .padEnd(len1)}${gapText}${subkeys[1].toUpperCase().padEnd(len2)}\n`,
     rowText = '';
-  tableText += '—'.repeat(tableWidth) + '\n';
-  CONFIG.CSet.forEach(item => {
-    rowText = `${item.key.toString().padEnd(len1)}${gapText}${item.info.padEnd(
-      len2
-    )}\n`;
+  tableText += '—'.repeat(tableText.length) + '\n';
+  keys.forEach(item => {
+    rowText = `${item.key
+      .toString()
+      .padEnd(len1)}${gapText}${item.info[0].padEnd(len2)}\n`;
     tableText += rowText;
   });
-  console.log(tableText);
+  // console.log(tableText);
   return tableText;
 }
 /**
@@ -476,18 +509,28 @@ function $btm() {
   smoothScrollTo(document.body.clientHeight - window.innerHeight, duration);
 }
 /**
- * 输入框退焦
+ * 清空输入历史
  */
-function $esc() {
-  search_ipt.blur();
-}
-/**
- * 清空输入文本
- */
-function $c() {
-  search_ipt.value = '';
-}
+function $cls() {}
 /**
  * 启动游戏
  */
 function $g() {}
+
+/**
+ * 按照类型获取时间
+ * @param {string|undefined} type 时间格式
+ */
+function $dt(type) {
+  let tmpdate,
+    date = new Date();
+  switch (type) {
+    case 't':
+      tmpdate = date.toLocaleTimeString();
+      break;
+    default:
+      tmpdate = date.toLocaleDateString();
+      break;
+  }
+  return tmpdate + '  ';
+}

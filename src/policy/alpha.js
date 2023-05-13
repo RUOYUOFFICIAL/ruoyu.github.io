@@ -10,7 +10,7 @@ function Elem(id) {
   return document.getElementById(id) || null;
 }
 
-var HEADER = Elem('header'),
+const HEADER = Elem('header'),
   MAJOR = Elem('major'),
   FOOTER = Elem('footer'),
   GLX = Elem('galaxy'),
@@ -21,9 +21,13 @@ var HEADER = Elem('header'),
   search_ipt = Elem('search_ipt'),
   ftext = Elem('ftext');
 
+//静态量
+const DATE = new Date(); //脚本生成时间
+var REQUEST = new Set(), //输入请求
+  HISTORY = ''; //记录信息
+
 //事件量
 var duration = 300, //过渡时间,单位ms
-  carousel_dis = 100,
   mousePOS = { x: 0, y: 0 },
   mouseFOCUS = false,
   mouse_Left = false,
@@ -49,7 +53,7 @@ var DEBUG = false,
 //galaxy常量
 var WIDTH = 1703,
   HEIGHT = 841,
-  FPS = 60, //帧数
+  FPS = 50, //帧数
   PI = Math.PI,
   SPEED = 15, //屏幕速度，结合PFS
   ZERO = 0.01,
@@ -74,8 +78,3 @@ var WIDTH = 1703,
   len_long = len_short * ratio_mid, //光标范围
   width_narrow = 0.6, //细线
   width_broad = width_narrow * ratio_double; //宽线
-
-//颜色
-var C0 = 'black',
-  C1 = 'white',
-  C3 = 'orangered';
