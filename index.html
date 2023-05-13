@@ -117,7 +117,7 @@
         case 'jpg':
           //图片预加载，确保需要使用时能立即获取
           let img = new Image();
-          img.src = getParentPath(fname);
+          img.src = path;
           assets.push({ fname, path });
           img = null;
           break;
