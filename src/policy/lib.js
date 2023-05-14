@@ -1,4 +1,30 @@
 //计算或数学类
+
+/**
+ * 获取最小值
+ * @param  {...number} values 多个值
+ * @returns 最小值
+ */
+function min(...values) {
+  return Math.min(...values);
+}
+/**
+ * 获取最大值
+ * @param  {...any} values 多个值
+ * @returns 最大值
+ */
+function max(...values) {
+  return Math.max(...values);
+}
+
+/**
+ * 取底
+ * @param {number} n
+ * @returns floor of n
+ */
+function floor(n) {
+  return Math.floor(n);
+}
 /**
  * 获取随机数
  * @param {number} val 基础量
@@ -16,7 +42,7 @@ function rand(val, min, max) {
  * @returns 返回对应随机类型
  */
 function randType(type) {
-  let ret;
+  let ret = '';
   switch (type) {
     case 'size': //随机大小
       ret = rand(size, ratio_equal, ratio_double);
@@ -299,19 +325,28 @@ function ZoomRatio(type) {
 }
 
 /**
- * 平滑滚动
- * @param {*} targetPosition 目标位置
- * @param {*} duration 滚动时间
+ * 带时限的平滑滚动
+ * @param {number} targetPosition 目标位置
+ * @param {number} duration 滚动时间
  */
 function smoothScrollTo(targetPosition, duration) {
+  if (!wheel_Scrolling) {
+    wheel_Scrolling = true;
+    _smoothScrollTo(targetPosition, duration);
+  }
+}
+/**
+ * 平滑滚动
+ * @param {number} targetPosition 目标位置
+ * @param {number} duration 滚动时间
+ */
+function _smoothScrollTo(targetPosition, duration) {
   let startPosition = window.pageYOffset,
     distance = targetPosition - startPosition,
     startTime = null;
 
   function scrollAnimation(currentTime) {
-    if (startTime === null) {
-      startTime = currentTime;
-    }
+    if (!startTime) startTime = currentTime;
 
     let elapsed = currentTime - startTime,
       ease = Math.easeInOut(elapsed, duration),
@@ -320,10 +355,10 @@ function smoothScrollTo(targetPosition, duration) {
 
     if (elapsed < duration) {
       requestAnimationFrame(scrollAnimation);
-    }
+    } else wheel_Scrolling = false;
   }
 
-  Math.easeInOut = function (t, duration) {
+  Math.easeInOut = (t, duration) => {
     t /= duration / 2;
     if (t < 1) return 0.5 * t * t;
     t--;
@@ -500,18 +535,20 @@ function $rl() {}
  * 滑动至顶部
  */
 function $top() {
-  smoothScrollTo(0, duration);
+  smoothScrollTo(bases[0].offsetTop, duration);
 }
 /**
  * 滑动至底部
  */
 function $btm() {
-  smoothScrollTo(document.body.clientHeight - window.innerHeight, duration);
+  smoothScrollTo(bases[base_count - 1].offsetTop, duration);
 }
 /**
  * 清空输入历史
  */
-function $cls() {}
+function $cls() {
+  HISTORY = '';
+}
 /**
  * 启动游戏
  */

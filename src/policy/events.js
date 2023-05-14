@@ -7,7 +7,7 @@
 document.body.style.zoom = 'reset';
 window.onkeydown = ev => {
   //callee针对firefox
-  let e = ev || window.event || arguments.callee.caller.arguments[0],
+  const e = ev || window.event || arguments.callee.caller.arguments[0],
     ec = e.code, //code备用
     ek = e.key;
   if (DEBUG && deb_key) console.log('K_DOWN:', ek);
@@ -60,7 +60,7 @@ window.onkeydown = ev => {
 //弹键
 window.onkeyup = ev => {
   //callee针对firefox
-  let e = ev || window.event || arguments.callee.caller.arguments[0],
+  const e = ev || window.event || arguments.callee.caller.arguments[0],
     ec = e.code, //code备用
     ek = e.key;
   if (DEBUG && deb_key) console.log('K_UP:', ek);
@@ -105,38 +105,38 @@ window.onresize = () => {
 https://www.cnblogs.com/xiaobaiou/p/10731062.html
 */
 window.addEventListener(
-  'mousewheel',
+  'wheel',
   ev => {
-    if (ev.ctrlKey === true || ev.metaKey) {
-      ev.preventDefault();
-    }
+    const e = ev,
+      delta = e.deltaY;
+    if (e.ctrlKey === true || e.metaKey || delta !== 0) e.preventDefault();
+    if (delta < 0) curIndex = max(0, --curIndex);
+    else curIndex = min(base_count - 1, ++curIndex);
+    // console.log(curIndex);
+    smoothScrollTo(bases[curIndex].offsetTop, duration);
   },
   { passive: false }
 );
 
 //firefox
-window.addEventListener(
-  'DOMMouseScroll',
-  ev => {
-    if (ev.ctrlKey === true || ev.metaKey) {
-      ev.preventDefault();
-    }
-  },
-  { passive: false }
-);
+// window.addEventListener(
+//   'DOMMouseScroll',
+//   ev => {
+//     if (ev.ctrlKey === true || ev.metaKey) {
+//       ev.preventDefault();
+//     }
+//   },
+//   { passive: false }
+// );
 
 //sticky
 window.onscroll = ev => {
-  let e = ev; // console.log(ratio_s);
-
+  const e = ev;
   scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
   if (ib2Top('top')) {
     if (!ipt_Actived()) indexbar.style.opacity = 'var(--low-opa)';
-  } else {
-    indexbar.style.opacity = 'var(--high-opa)';
-  }
-  // console.log(scrollTop);
+  } else indexbar.style.opacity = 'var(--high-opa)';
+
   core.style.top = `calc(40% + ${scrollTop * 0.85}px)`;
   // console.log(core.style.top);
 };
@@ -149,7 +149,7 @@ window.onscroll = ev => {
 //移入|移动事件
 function glx_mEnter(ev) {
   mouseFOCUS = true;
-  let e = ev;
+  const e = ev;
   if (DEBUG && deb_mouse)
     console.log('M_ENTER|MOVE:(', e.offsetX, ',', e.offsetY, ')');
   mousePOS.x = e.offsetX;
@@ -165,7 +165,7 @@ function glx_mLeave() {
 }
 //按键事件
 function glx_mDown(ev) {
-  let e = ev,
+  const e = ev,
     eb = e.button;
   if (DEBUG && deb_mouse) console.log('M_DOWN:', eb);
   switch (eb) {
@@ -184,7 +184,7 @@ function glx_mDown(ev) {
 }
 //弹键事件
 function glx_mUp(ev) {
-  let e = ev,
+  const e = ev,
     eb = e.button;
   if (DEBUG && deb_mouse) console.log('M_UP:', eb);
   switch (eb) {
@@ -215,7 +215,7 @@ function ipt_Focus() {
 }
 //输入框按键
 function ipt_KDown(ev) {
-  let e = ev,
+  const e = ev,
     ek = e.key;
   if (DEBUG && deb_key) console.log('IPT_K_DOWN:', ek);
   switch (ek) {
@@ -226,7 +226,7 @@ function ipt_KDown(ev) {
   }
 }
 function ipt_KUp(ev) {
-  let e = ev,
+  const e = ev,
     ek = e.key;
   if (DEBUG && deb_key) console.log('IPT_K_UP:', ek);
 
