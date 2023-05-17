@@ -44,6 +44,8 @@
       <div class="base"></div>
       <div class="base"></div>
       <div class="base"></div>
+      <div class="base"></div>
+      <div class="base"></div>
       <!-- <div class="left" id="left">
         <h2>若</h2>
         <div class="pic"></div>
@@ -65,83 +67,7 @@
   </body>
   <!--body end-->
   <!--script start-->
-  <script>
-    var root = './src/';
-    function getParentPath(type) {
-      let path = root;
-      switch (type) {
-        case 'js':
-          path += 'policy/';
-          break;
-        case 'png':
-        case 'svg':
-        case 'jpg':
-        case 'json':
-          path += 'assets/';
-          break;
-        case 'html':
-          path += 'route/';
-          break;
-        case 'css':
-          path += 'style/';
-          break;
-        default:
-          break;
-      }
-      return path;
-    }
-    //css和js的文件名必须按先后顺序存放，其他文件无所谓
-    var fileNames = [
-        //css
-        'base.css',
-        'components.css',
-        'pulse.css',
-        //js
-        'alpha.js',
-        'events.js',
-        'lib.js',
-        'obj.js',
-        'plot.js',
-        'main.js',
-        //other
-        'cmd.svg',
-        'search.svg',
-        'search_active.svg',
-        'search_active_black.svg',
-      ],
-      assets = [];
-    //引入脚本
-    function importFile(fname) {
-      let type = fname.split('.').pop(),
-        path = getParentPath(type) + fname;
-      switch (type) {
-        case 'svg':
-        case 'png':
-        case 'jpg':
-          //图片预加载，确保需要使用时能立即获取
-          let img = new Image();
-          img.src = path;
-          assets.push({ fname, path });
-          img = null;
-          break;
-        case 'css':
-          let link = document.createElement('link');
-          link.rel = 'stylesheet';
-          // link.type = 'text/css';
-          link.href = path;
-          document.head.appendChild(link);
-          break;
-        case 'js':
-          let script = document.createElement('script');
-          script.src = path;
-          document.documentElement.appendChild(script);
-          break;
-      }
-    }
-    //调用
-    for (let i = 0; i < fileNames.length; i++) importFile(fileNames[i]);
-    // console.log(fileNames.length, assets);
-  </script>
+  <script src="./src/policy/run.js"></script>
   <!--script end-->
 </html>
 <!--html end-->

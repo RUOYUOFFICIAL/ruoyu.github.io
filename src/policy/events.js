@@ -1,3 +1,6 @@
+//加载完毕
+console.log(1, 'event ok');
+
 // 从简原则
 // 为了减小计算机各部门的工作负担，各事件内部执行代码应尽可能少
 // 通常，只涉及信号量值变换，其他工作例如渲染、大量计算则放在主体代码中执行
@@ -92,6 +95,7 @@ window.onkeyup = ev => {
 //尺寸变化
 window.onresize = () => {
   if (DEBUG && deb_cmd) console.log('resize:', CTX.width, CTX.height);
+  base_height = bases[0].scrollHeight;
   //窗口等比放缩
   reBALLs();
   //重置绘画配置，窗口尺寸瞬间改变可能导致尺寸未及时同步
@@ -110,8 +114,7 @@ window.addEventListener(
     const e = ev,
       delta = e.deltaY;
     if (e.ctrlKey === true || e.metaKey || delta !== 0) e.preventDefault();
-    if (delta < 0) curIndex = max(0, --curIndex);
-    else curIndex = min(base_count - 1, ++curIndex);
+    indexUpdate(delta);
     // console.log(curIndex);
     smoothScrollTo(bases[curIndex].offsetTop, duration);
   },
@@ -132,39 +135,65 @@ window.addEventListener(
 //sticky
 window.onscroll = ev => {
   const e = ev;
-  scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  scrollTop = window.pageYOffset || DOCELEM.scrollTop;
+  scrollHeight = DOCELEM.scrollHeight - DOCELEM.clientHeight;
+  //导航栏
   if (ib2Top('top')) {
     if (!ipt_Actived()) indexbar.style.opacity = 'var(--low-opa)';
   } else indexbar.style.opacity = 'var(--high-opa)';
-
-  core.style.top = `calc(40% + ${scrollTop * 0.85}px)`;
+  //核心
+  if (ib2Top('head')) {
+    for (let i = 0; i < pulses.length; i++) pulses[i].style.display = 'block';
+  } else
+    for (let i = 0; i < pulses.length; i++) pulses[i].style.display = 'none';
+  //暂存非整数，等待下次滚轮取整
+  curIndex = scrollTop / base_height;
+  // let ratio_s = scrollTop / scrollHeight;
+  // console.log(ratio_s);
+  // core.style.width =
+  //   core.style.height = `calc(var(--core-r) - var(--core-r)*0.5*${ratio_s})`;
+  core.style.top = `calc(40% + ${coreTop()}px)`; //40~110
+  // core.style.left = `calc(50% - ${ratio_s * 40}%)`; //50~10
+  // core.style.width = core.style.height = `calc(var(--core-r) - ${
+  //   scrollTop / 10
+  // }px)`;
   // console.log(core.style.top);
 };
 
 //组件事件,所有组件事件应当在脚本加载完成后再统一挂载
 //否则可能遇到组件不存在、无法访问的问题
+// GLX.onmouseenter = GLX.onmousemove = ev => glx_mEnter(ev);
+// GLX.onmouseleave = ev => glx_mLeave(ev);
+// GLX.onmousedown = ev => glx_mDown(ev);
+// GLX.onmouseup = ev => glx_mUp(ev);
+// search_ipt.onblur = ev => ipt_Blur(ev);
+// search_ipt.onfocus = ev => ipt_Focus(ev);
+// search_ipt.onkeydown = ev => ipt_KDown(ev);
+// search_ipt.onkeyup = ev => ipt_KUp(ev);
+// search_btn.onmousedown = ev => btn_mDown(ev);
+// search_btn.onmouseup = ev => btn_mUp(ev);
 
 //画布事件
 //仅限canvas 的事件
 //移入|移动事件
-function glx_mEnter(ev) {
+GLX.onmouseenter = GLX.onmousemove = ev => {
   mouseFOCUS = true;
   const e = ev;
   if (DEBUG && deb_mouse)
     console.log('M_ENTER|MOVE:(', e.offsetX, ',', e.offsetY, ')');
   mousePOS.x = e.offsetX;
   mousePOS.y = e.offsetY;
-}
+};
 //离开事件
-function glx_mLeave() {
+GLX.onmouseleave = ev => {
   if (DEBUG && deb_mouse) console.log('M_LEAVE');
   mouseFOCUS = false;
   mouse_Left = false;
   mouse_Mid = false;
   mouse_Right = false;
-}
+};
 //按键事件
-function glx_mDown(ev) {
+GLX.onmousedown = ev => {
   const e = ev,
     eb = e.button;
   if (DEBUG && deb_mouse) console.log('M_DOWN:', eb);
@@ -181,9 +210,9 @@ function glx_mDown(ev) {
     default:
       break;
   }
-}
+};
 //弹键事件
-function glx_mUp(ev) {
+GLX.onmouseup = ev => {
   const e = ev,
     eb = e.button;
   if (DEBUG && deb_mouse) console.log('M_UP:', eb);
@@ -200,21 +229,21 @@ function glx_mUp(ev) {
     default:
       break;
   }
-}
+};
 
 //获取输入框激活状态
 function ipt_Actived() {
   return document.activeElement === search_ipt;
 }
 //输入框焦点事件
-function ipt_Blur() {
+search_ipt.onblur = ev => {
   if (ib2Top('top')) indexbar.style.opacity = 'var(--low-opa)';
-}
-function ipt_Focus() {
+};
+search_ipt.onfocus = ev => {
   indexbar.style.opacity = 'var(--high-opa)';
-}
+};
 //输入框按键
-function ipt_KDown(ev) {
+search_ipt.onkeydown = ev => {
   const e = ev,
     ek = e.key;
   if (DEBUG && deb_key) console.log('IPT_K_DOWN:', ek);
@@ -224,8 +253,8 @@ function ipt_KDown(ev) {
       console.log('→');
       break;
   }
-}
-function ipt_KUp(ev) {
+};
+search_ipt.onkeyup = ev => {
   const e = ev,
     ek = e.key;
   if (DEBUG && deb_key) console.log('IPT_K_UP:', ek);
@@ -233,8 +262,9 @@ function ipt_KUp(ev) {
   switch (ek) {
     case 'Enter':
       if (ipt_Actived) {
-        HISTORY += TryEXE(search_ipt.value);
-        // console.log(REQUEST);
+        let ipt_text = TryEXE(search_ipt.value);
+        if (ipt_text) HISTORY.push(ipt_text);
+        // console.log(HISTORY);
       }
       break;
     case 'ArrowUp':
@@ -247,17 +277,17 @@ function ipt_KUp(ev) {
     default:
       break;
   }
-}
+};
 
 //按钮点击事件
-function btn_mDown() {
+search_btn.onmousedown = ev => {
   if (deb_cmd) return;
-  if (ib2Top('mid')) setBGI(search_btn, 'search_active_black.svg');
+  if (ib2Top('head')) setBGI(search_btn, 'search_active_black.svg');
   else setBGI(search_btn, 'search_active.svg');
-}
-function btn_mUp() {
+};
+search_btn.onmouseup = ev => {
   if (!deb_cmd) setBGI(search_btn, 'search.svg');
-}
+};
 
 //导航栏位置事件
 /**
@@ -269,12 +299,15 @@ function ib2Top(type) {
   let top;
   switch (type) {
     case 'top':
-      top = 200;
+      top = min(base_height / 4, 200);
       break;
-    case 'mid':
-    case 'center':
-      top = window.innerHeight;
+    case 'head':
+      top = base_height;
+      break;
+    case 'btm':
       break;
   }
-  return scrollTop <= top;
+  return scrollTop <= top - 1;
 }
+
+//核心事件

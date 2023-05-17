@@ -1,5 +1,6 @@
-//配置
-var CONFIG;
+//加载完毕
+console.log(0, 'alpha ok');
+
 //元素注册
 
 /**
@@ -21,7 +22,8 @@ function Elem(tag, type) {
   return elem || null;
 }
 
-const HEADER = Elem('header', 'id'),
+const DOCELEM = document.documentElement,
+  HEADER = Elem('header', 'id'),
   MAJOR = Elem('major', 'id'),
   FOOTER = Elem('footer', 'id'),
   GLX = Elem('galaxy', 'id'),
@@ -32,19 +34,20 @@ const HEADER = Elem('header', 'id'),
   search_ipt = Elem('search_ipt', 'id'),
   ftext = Elem('ftext', 'id'),
   bases = Elem('base', 'class'),
-  base_count = bases.length,
-  base_height = bases[0].scrollHeight;
+  pulses = Elem('pulse', 'class'),
+  base_count = bases.length;
 // console.log(base_count);
 
 //记录量
-const DATE = new Date(); //脚本生成时间
-var scrollTop = 0, //滚动条位置（相对顶端）
+var REQUEST = new Set(), //输入请求
+  HISTORY = [],
+  scrollTop = 0, //滚动条位置（相对顶端）
+  scrollHeight = 0,
   curIndex = 0,
-  REQUEST = new Set(), //输入请求
-  HISTORY = ''; //记录信息
+  base_height = bases[0].scrollHeight; //记录信息
 
 //事件量
-var duration = 250, //过渡时长,单位ms
+var duration = 333, //过渡时长,单位ms
   mousePOS = { x: 0, y: 0 },
   mouseFOCUS = false,
   mouse_Left = false,
@@ -76,11 +79,11 @@ var WIDTH = 1703,
   SPEED = 15, //屏幕速度，结合PFS
   ZERO = 0.01,
   ANGLE = NaN, //光标角（相对x轴）
+  BALLs = [], //球集;
   ratio_half = 0.5,
   ratio_equal = 1,
   ratio_mid = 1.5,
   ratio_double = 2,
-  BALLs = [], //球集
   ratio_x = 0, //光标横坐标比，相对(0,0)
   ratio_y = 0, //光标纵坐标比
   ratio_w = 1, //宽比

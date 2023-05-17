@@ -1,3 +1,6 @@
+//加载完毕
+console.log(4, 'plot ok');
+
 /**
  * 画布初始化
  * @param {number} width 宽
@@ -55,25 +58,27 @@ function onBGIPlot() {
   var tmp_angle = atan2(mousePOS.x, mousePOS.y);
   if (mouseFOCUS && tmp_angle != ANGLE) {
     ratio_x = (100 * mousePOS.x) / HEADER.scrollWidth;
-    ratio_y =
-      (100 * (mousePOS.y + document.documentElement.scrollTop)) /
-      HEADER.scrollHeight;
+    ratio_y = (100 * (mousePOS.y + scrollTop)) / HEADER.scrollHeight;
     //console.log("replot at " + ratio_x + "/" + ratio_y);
+    //背景光
     HEADER.style.setProperty(
       'background-image',
       `radial-gradient(circle at ${ratio_x}% ${ratio_y}%, lightcyan 0, skyblue 50%)`
     );
-    if (DEBUG && deb_mouse) {
-      var rect = core.getBoundingClientRect(),
-        rx = rect.left + rect.width / 2,
-        ry = rect.top + rect.height / 2;
-      core.style.setProperty(
-        'background-image',
-        `linear-gradient(${
-          (atan2(mousePOS.y - ry, mousePOS.x - rx) * 180) / PI - 90
-        }deg, #9AF 30%, #369 90%)`
-      );
-    }
+    let rect = core.getBoundingClientRect(),
+      rx = rect.left + rect.width / 2,
+      ry = rect.top + rect.height / 2,
+      cpos = { x: rx, y: ry },
+      ratio_dis_m2c = sqrt2p(cpos, mousePOS) / 10; //分母影响距离光因子，分母越大，作用距离越远
+    //核心光
+    core.style.setProperty(
+      'background-image',
+      `linear-gradient(${
+        (atan2p(cpos, mousePOS) * 180) / PI - 90
+      }deg, var(--core-sd-c) ${-ratio_dis_m2c}%, var(--core-bgc) ${
+        100 - ratio_dis_m2c
+      }%)`
+    );
     // 记录当前角度以便下次对比
     ANGLE = tmp_angle;
   }
@@ -126,6 +131,24 @@ function FRAME() {
   onBallPlot();
 }
 
+//首次初始化
+Init(HEADER.scrollWidth, HEADER.scrollHeight);
+if (DEBUG && deb_cmd) console.log('size:', CTX.width, CTX.height);
+//创建粒子
+for (let i = 0; i < count; i++)
+  BALLs.push(
+    new Ball(
+      i,
+      '!me',
+      randType('size'),
+      randType('x'),
+      randType('y'),
+      randType('angle'),
+      randType('speed'),
+      randType('indigo')
+    )
+  );
+
 //形成动画
 let ANIMATION = (timestamp, elapsed) => {
   //锁帧
@@ -138,3 +161,7 @@ let ANIMATION = (timestamp, elapsed) => {
     ANIMATION(_timestamp, elapsed + _timestamp - timestamp)
   );
 };
+// console.log(CONFIG);
+
+//回调动画
+window.requestAnimationFrame(timestamp => ANIMATION(timestamp, 0));

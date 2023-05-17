@@ -58,10 +58,12 @@
     --ib-btn-img-active: url("../assets/search_active.svg");
 
     /* for pulse */
-    --core-r: 25vmin;
-    --core-r-hover: 30vmin;
-    --core-bgc: #478;
+    --core-r: 20vmin;
+    --core-r-hover: 25vmin;
+    --core-bgc: #468;
     --core-bgc-hover: #246;
+    --core-sd-c: #59a;
+    --core-sd-offset: 6px;
 }
 
 body {

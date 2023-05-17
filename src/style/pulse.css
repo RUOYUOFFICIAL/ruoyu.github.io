@@ -22,10 +22,10 @@
     background-repeat: no-repeat;
     /* background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%); */
     cursor: pointer;
+    /* box-shadow: inset 0 var(--core-sd-offset) var(--core-sd-c); */
     /* transition: var(--fast-tst); */
     transition: width var(--fast-tst), height var(--fast-tst);
 }
-
 
 #core,
 .pulse {

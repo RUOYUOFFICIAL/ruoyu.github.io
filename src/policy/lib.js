@@ -1,3 +1,6 @@
+//加载完毕
+console.log(2, 'lib ok');
+
 //计算或数学类
 
 /**
@@ -25,6 +28,16 @@ function max(...values) {
 function floor(n) {
   return Math.floor(n);
 }
+
+/**
+ * 去顶
+ * @param {number} n
+ * @returns ceil of n
+ */
+function ceil(n) {
+  return Math.ceil(n);
+}
+
 /**
  * 获取随机数
  * @param {number} val 基础量
@@ -353,11 +366,11 @@ function _smoothScrollTo(targetPosition, duration) {
       scrollPosition = startPosition + distance * ease;
     window.scrollTo(0, scrollPosition);
 
-    if (elapsed < duration) {
+    if (elapsed <= duration) {
       requestAnimationFrame(scrollAnimation);
     } else wheel_Scrolling = false;
   }
-
+  //过渡曲线
   Math.easeInOut = (t, duration) => {
     t /= duration / 2;
     if (t < 1) return 0.5 * t * t;
@@ -368,9 +381,21 @@ function _smoothScrollTo(targetPosition, duration) {
   requestAnimationFrame(scrollAnimation);
 }
 
+//核心过渡曲线
+function coreTop() {
+  return scrollTop <= base_height
+    ? scrollTop * 0.75
+    : scrollTop - base_height * 0.25;
+}
+//纵轴角标
+function indexUpdate(delta) {
+  //基量不准，增加ZERO辅助计算
+  if (delta < 0) curIndex = ceil(max(0, --curIndex) - ZERO);
+  else curIndex = floor(min(base_count - 1, ++curIndex) + ZERO);
+}
+
 // 保存原始的 split 方法
 const originalSplit = String.prototype.split;
-
 /**
  * 重写字符串split 方法，去除空字符
  * @param {string|RegExp} separator 分隔符
@@ -408,7 +433,7 @@ function TryEXE(text) {
   REQUEST.add(text);
   let tmp,
     ret = typeEXE('Base', text);
-  if (ret !== 'Base') return $dt('t') + ret + '\n';
+  if (ret !== 'Base') return $dt('t') + ret;
   else ret = '';
   if (!deb_cmd) {
     tmp = typeEXE('!CMD', text);
@@ -419,11 +444,12 @@ function TryEXE(text) {
   }
   ret += tmp;
   // console.log('tag', ret);
-  return $dt('t') + ret + '\n';
+  return $dt('t') + ret;
 }
 
+//按类型执行
 function typeEXE(type, text) {
-  let set = CONFIG.KeySet[type],
+  let set = CONFIG.KEYSET[type],
     tag = set.tag,
     gap = set.prefix;
   switch (type) {
@@ -446,6 +472,7 @@ function typeEXE(type, text) {
   // console.log(ktem.info[1] || ret);
   return ktem.info[1] || ret;
 }
+
 //-----------------非指令模式、普通模式
 //普通执行函数库，均以_开头命名
 /**
@@ -493,7 +520,7 @@ var $e = ($q = () => {
  * @returns 版本号
  */
 function $v() {
-  let ver = `version: ${CONFIG.version}`;
+  let ver = `version: ${CONFIG.VERSION}`;
   // console.log(ver);
   return ver;
 }
@@ -502,7 +529,7 @@ function $v() {
  * @returns 帮助文本
  */
 function $h() {
-  let keys = CONFIG.KeySet['CMD'].keys,
+  let keys = CONFIG.KEYSET['CMD'].keys,
     subkeys = Object.keys(keys[0]),
     gapText = '| ',
     len1 = 15,
@@ -547,7 +574,7 @@ function $btm() {
  * 清空输入历史
  */
 function $cls() {
-  HISTORY = '';
+  HISTORY = [];
 }
 /**
  * 启动游戏
