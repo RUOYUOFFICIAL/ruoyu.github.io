@@ -30,12 +30,30 @@ function floor(n) {
 }
 
 /**
- * 去顶
+ * 取顶
  * @param {number} n
  * @returns ceil of n
  */
 function ceil(n) {
   return Math.ceil(n);
+}
+
+/**
+ * 四舍五入
+ * @param {number} n
+ * @returns round of n
+ */
+function round(n) {
+  return Math.round(n);
+}
+
+/**
+ * 保留整数部分
+ * @param {number} n
+ * @returns trunc of n
+ */
+function trunc(n) {
+  return Math.trunc(n);
 }
 
 /**
@@ -343,8 +361,8 @@ function ZoomRatio(type) {
  * @param {number} duration 滚动时间
  */
 function smoothScrollTo(targetPosition, duration) {
-  if (!wheel_Scrolling) {
-    wheel_Scrolling = true;
+  if (!scrolling) {
+    scrolling = true;
     _smoothScrollTo(targetPosition, duration);
   }
 }
@@ -366,9 +384,8 @@ function _smoothScrollTo(targetPosition, duration) {
       scrollPosition = startPosition + distance * ease;
     window.scrollTo(0, scrollPosition);
 
-    if (elapsed <= duration) {
-      requestAnimationFrame(scrollAnimation);
-    } else wheel_Scrolling = false;
+    if (elapsed <= duration) requestAnimationFrame(scrollAnimation);
+    else scrolling = false;
   }
   //过渡曲线
   Math.easeInOut = (t, duration) => {
@@ -377,21 +394,26 @@ function _smoothScrollTo(targetPosition, duration) {
     t--;
     return -0.5 * (t * (t - 2) - 1);
   };
-
   requestAnimationFrame(scrollAnimation);
 }
 
 //核心过渡曲线
 function coreTop() {
+  let ratio = 0.75;
   return scrollTop <= base_height
-    ? scrollTop * 0.75
-    : scrollTop - base_height * 0.25;
+    ? scrollTop * ratio
+    : scrollTop - base_height * (1 - ratio);
 }
 //纵轴角标
 function indexUpdate(delta) {
+  INDEX = scrollTop / base_height;
+  let rIndex = round(INDEX);
   //基量不准，增加ZERO辅助计算
-  if (delta < 0) curIndex = ceil(max(0, --curIndex) - ZERO);
-  else curIndex = floor(min(base_count - 1, ++curIndex) + ZERO);
+  if (abs2(INDEX, rIndex) < ZERO) INDEX = rIndex;
+  // console.log('former', INDEX);
+  if (delta < 0) INDEX = max(0, ceil(INDEX) - 1);
+  else INDEX = min(panel_count - 1, floor(INDEX) + 1);
+  // console.log('latter', INDEX);
 }
 
 // 保存原始的 split 方法
@@ -562,13 +584,13 @@ function $rl() {}
  * 滑动至顶部
  */
 function $top() {
-  smoothScrollTo(bases[0].offsetTop, duration);
+  smoothScrollTo(panels[0].offsetTop, duration);
 }
 /**
  * 滑动至底部
  */
 function $btm() {
-  smoothScrollTo(bases[base_count - 1].offsetTop, duration);
+  smoothScrollTo(panels[panel_count - 1].offsetTop, duration);
 }
 /**
  * 清空输入历史

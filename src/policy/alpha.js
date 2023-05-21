@@ -33,18 +33,19 @@ const DOCELEM = document.documentElement,
   search_btn = Elem('search_btn', 'id'),
   search_ipt = Elem('search_ipt', 'id'),
   ftext = Elem('ftext', 'id'),
-  bases = Elem('base', 'class'),
+  panels = Elem('panel', 'class'),
   pulses = Elem('pulse', 'class'),
-  base_count = bases.length;
-// console.log(base_count);
+  panel_count = panels.length;
+// console.log('count', panel_count);
 
 //记录量
 var REQUEST = new Set(), //输入请求
   HISTORY = [],
+  INDEX = 0,
+  SUBIND = 0,
   scrollTop = 0, //滚动条位置（相对顶端）
   scrollHeight = 0,
-  curIndex = 0,
-  base_height = bases[0].scrollHeight; //记录信息
+  base_height = panels[0].scrollHeight; //记录信息
 
 //事件量
 var duration = 333, //过渡时长,单位ms
@@ -53,7 +54,7 @@ var duration = 333, //过渡时长,单位ms
   mouse_Left = false,
   mouse_Mid = false,
   mouse_Right = false,
-  wheel_Scrolling = false,
+  scrolling = false,
   key_Console = false,
   key_Shift = false,
   key_Ctrl = false,
@@ -77,7 +78,7 @@ var WIDTH = 1703,
   FPS = 50, //帧数
   PI = Math.PI,
   SPEED = 15, //屏幕速度，结合PFS
-  ZERO = 0.01,
+  ZERO = 0.001,
   ANGLE = NaN, //光标角（相对x轴）
   BALLs = [], //球集;
   ratio_half = 0.5,

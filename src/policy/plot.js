@@ -69,14 +69,14 @@ function onBGIPlot() {
       rx = rect.left + rect.width / 2,
       ry = rect.top + rect.height / 2,
       cpos = { x: rx, y: ry },
-      ratio_dis_m2c = sqrt2p(cpos, mousePOS) / 10; //分母影响距离光因子，分母越大，作用距离越远
+      ratio_m2c_former = -sqrt2p(cpos, mousePOS) / 10; //分母影响距离光因子，分母越大，作用距离越远
     //核心光
     core.style.setProperty(
       'background-image',
       `linear-gradient(${
-        (atan2p(cpos, mousePOS) * 180) / PI - 90
-      }deg, var(--core-sd-c) ${-ratio_dis_m2c}%, var(--core-bgc) ${
-        100 - ratio_dis_m2c
+        (atan2p(cpos, mousePOS) / PI) * 180 - 90
+      }deg, var(--core-sd-c) ${ratio_m2c_former}%, var(--core-bgc) ${
+        100 + ratio_m2c_former
       }%)`
     );
     // 记录当前角度以便下次对比

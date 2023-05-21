@@ -95,7 +95,7 @@ window.onkeyup = ev => {
 //尺寸变化
 window.onresize = () => {
   if (DEBUG && deb_cmd) console.log('resize:', CTX.width, CTX.height);
-  base_height = bases[0].scrollHeight;
+  base_height = panels[0].scrollHeight;
   //窗口等比放缩
   reBALLs();
   //重置绘画配置，窗口尺寸瞬间改变可能导致尺寸未及时同步
@@ -114,9 +114,13 @@ window.addEventListener(
     const e = ev,
       delta = e.deltaY;
     if (e.ctrlKey === true || e.metaKey || delta !== 0) e.preventDefault();
+    //暂存非整数，等待下次滚轮取整
     indexUpdate(delta);
-    // console.log(curIndex);
-    smoothScrollTo(bases[curIndex].offsetTop, duration);
+    smoothScrollTo(base_height * INDEX, duration);
+    // INDEX = round(INDEX);
+    // console.log('round', INDEX);
+    // INDEX = round(scrollTop / base_height);
+    // console.log('goto', INDEX);
   },
   { passive: false }
 );
@@ -135,6 +139,7 @@ window.addEventListener(
 //sticky
 window.onscroll = ev => {
   const e = ev;
+  // console.log(e.deltaY);
   scrollTop = window.pageYOffset || DOCELEM.scrollTop;
   scrollHeight = DOCELEM.scrollHeight - DOCELEM.clientHeight;
   //导航栏
@@ -143,13 +148,14 @@ window.onscroll = ev => {
   } else indexbar.style.opacity = 'var(--high-opa)';
   //核心
   if (ib2Top('head')) {
-    for (let i = 0; i < pulses.length; i++) pulses[i].style.display = 'block';
-  } else
-    for (let i = 0; i < pulses.length; i++) pulses[i].style.display = 'none';
-  //暂存非整数，等待下次滚轮取整
-  curIndex = scrollTop / base_height;
-  // let ratio_s = scrollTop / scrollHeight;
-  // console.log(ratio_s);
+    [...pulses].forEach(pulse => {
+      pulse.style.display = 'block';
+    });
+  } else {
+    [...pulses].forEach(pulse => {
+      pulse.style.display = 'none';
+    });
+  }
   // core.style.width =
   //   core.style.height = `calc(var(--core-r) - var(--core-r)*0.5*${ratio_s})`;
   core.style.top = `calc(40% + ${coreTop()}px)`; //40~110
@@ -229,6 +235,10 @@ GLX.onmouseup = ev => {
     default:
       break;
   }
+};
+
+core.onmouseenter = () => {
+  core.style.background = '';
 };
 
 //获取输入框激活状态

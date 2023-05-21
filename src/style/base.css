@@ -2,7 +2,7 @@
 
 /* 伪根类 */
 :root {
-    /* for base  */
+    /* for panel  */
     /* 纵层 */
     --zbtm: 0;
     --zmid: 49;
@@ -24,7 +24,7 @@
     /* major */
     --m-bgi: linear-gradient(135deg, #7EF 0%, #BBE 100%);
     /* footer */
-    --f-lr-width: 20vw;
+    --f-lr-width: 23vw;
     --f-height: 1.5vmin;
     --f-height-hover: 4vmin;
     --f-font-size: 50%;
@@ -86,23 +86,22 @@ p {
     cursor: pointer;
 }
 
+/* 顶部 */
+#header {
+    background-image: var(--h-bgi);
+}
 
-.base {
+.panel,
+.sub_panel {
     z-index: var(--zbtm);
     width: var(--full-cw);
     height: var(--full-sh);
 }
 
-#header {
-    background-image: var(--h-bgi);
-}
-
-
 /*中部容器*/
-
-#major .base {
+#major .panel .sub_panel {
     /* margin: 0; */
-    position: relative;
+    position: absolute;
     overflow: none;
     /* background: lightblue; */
     background-image: var(--m-bgi);
@@ -115,7 +114,6 @@ p {
 
 
 /* 底部 */
-
 #footer {
     z-index: var(--ztop);
     position: fixed;
@@ -141,16 +139,16 @@ p {
 
 
 /*底部过渡*/
-
 #footer:hover {
     height: var(--f-height-hover);
     opacity: var(--high-opa);
     line-height: var(--f-height-hover);
+    border-radius: var(--f-height-hover) var(--f-height-hover) 0 0;
     font-size: var(--f-font-size-hover);
     color: var(--f-item-bgc);
 }
 
-
+/* 媒体 */
 @media only screen and (min-width: 800px) {
     #footer {
         letter-spacing: var(--f-ltspc);
