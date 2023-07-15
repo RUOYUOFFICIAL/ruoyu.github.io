@@ -110,6 +110,8 @@ p {
     background-position: center;
     /* opacity: var(--high-opa); */
     /*background-image: url("../res/center.gif");*/
+    clip-path: inset(0 0 0 0);
+    cursor: pointer;
 }
 
 

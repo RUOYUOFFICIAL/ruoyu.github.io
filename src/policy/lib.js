@@ -505,7 +505,7 @@ function cmd() {
   deb_cmd = true;
   setBGI(search_btn, 'cmd.svg');
   search_btn.style.cursor = 'default';
-  search_ipt.placeholder = '<';
+  search_ipt.placeholder = sign_cmd;
   _c();
   // console.log(deb_cmd);
 }
@@ -534,7 +534,7 @@ var $e = ($q = () => {
   deb_cmd = false;
   setBGI(search_btn, 'search.svg');
   search_btn.style.cursor = 'pointer';
-  search_ipt.placeholder = '?';
+  search_ipt.placeholder = sign_ques;
   // console.log(deb_cmd);
 });
 /**

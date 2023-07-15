@@ -56,7 +56,7 @@ function reBALLs() {
 function onBGIPlot() {
   //利用角度变化近似鼠标的移动行为，因为人为移动鼠标不可能总使得角度不变
   var tmp_angle = atan2(mousePOS.x, mousePOS.y);
-  if (mouseFOCUS && tmp_angle != ANGLE) {
+  if (mouseFOCUS && tmp_angle !== ANGLE) {
     ratio_x = (100 * mousePOS.x) / HEADER.scrollWidth;
     ratio_y = (100 * (mousePOS.y + scrollTop)) / HEADER.scrollHeight;
     //console.log("replot at " + ratio_x + "/" + ratio_y);

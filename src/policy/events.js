@@ -113,7 +113,7 @@ window.addEventListener(
   ev => {
     const e = ev,
       delta = e.deltaY;
-    if (e.ctrlKey === true || e.metaKey || delta !== 0) e.preventDefault();
+    if (e.ctrlKey || e.metaKey || delta !== 0) e.preventDefault();
     //暂存非整数，等待下次滚轮取整
     indexUpdate(delta);
     smoothScrollTo(base_height * INDEX, duration);

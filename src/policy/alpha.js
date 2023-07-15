@@ -45,10 +45,12 @@ var REQUEST = new Set(), //输入请求
   SUBIND = 0,
   scrollTop = 0, //滚动条位置（相对顶端）
   scrollHeight = 0,
-  base_height = panels[0].scrollHeight; //记录信息
+  base_height = panels[0].scrollHeight;
 
 //事件量
 var duration = 333, //过渡时长,单位ms
+  sign_cmd = '<',
+  sign_ques = '?',
   mousePOS = { x: 0, y: 0 },
   mouseFOCUS = false,
   mouse_Left = false,
