@@ -1,5 +1,5 @@
 //加载完毕
-console.log(2, 'lib ok');
+console.log(2, 'lib ok')
 
 //计算或数学类
 
@@ -9,7 +9,7 @@ console.log(2, 'lib ok');
  * @returns 最小值
  */
 function min(...values) {
-  return Math.min(...values);
+  return Math.min(...values)
 }
 /**
  * 获取最大值
@@ -17,7 +17,7 @@ function min(...values) {
  * @returns 最大值
  */
 function max(...values) {
-  return Math.max(...values);
+  return Math.max(...values)
 }
 
 /**
@@ -26,7 +26,7 @@ function max(...values) {
  * @returns floor of n
  */
 function floor(n) {
-  return Math.floor(n);
+  return Math.floor(n)
 }
 
 /**
@@ -35,7 +35,7 @@ function floor(n) {
  * @returns ceil of n
  */
 function ceil(n) {
-  return Math.ceil(n);
+  return Math.ceil(n)
 }
 
 /**
@@ -44,7 +44,7 @@ function ceil(n) {
  * @returns round of n
  */
 function round(n) {
-  return Math.round(n);
+  return Math.round(n)
 }
 
 /**
@@ -53,7 +53,7 @@ function round(n) {
  * @returns trunc of n
  */
 function trunc(n) {
-  return Math.trunc(n);
+  return Math.trunc(n)
 }
 
 /**
@@ -64,7 +64,7 @@ function trunc(n) {
  * @returns val*[min,max)
  */
 function rand(val, min, max) {
-  return val * (min + (max - min) * Math.random());
+  return val * (min + (max - min) * Math.random())
 }
 
 /**
@@ -73,29 +73,29 @@ function rand(val, min, max) {
  * @returns 返回对应随机类型
  */
 function randType(type) {
-  let ret = '';
+  let ret = ''
   switch (type) {
     case 'size': //随机大小
-      ret = rand(size, ratio_equal, ratio_double);
-      break;
+      ret = rand(size, ratio_equal, ratio_double)
+      break
     case 'x': //随机横坐标
-      ret = rand(size, ratio_double, CTX.width / size - ratio_double);
-      break;
+      ret = rand(size, ratio_double, CTX.width / size - ratio_double)
+      break
     case 'y': //随机纵坐标
-      ret = rand(size, ratio_double, CTX.height / size - ratio_double);
-      break;
+      ret = rand(size, ratio_double, CTX.height / size - ratio_double)
+      break
     case 'angle': //随机角度
-      ret = rand(PI, 0, 2);
-      break;
+      ret = rand(PI, 0, 2)
+      break
     case 'speed': //随机速度
-      ret = rand(speed, ratio_equal, ratio_double);
-      break;
+      ret = rand(speed, ratio_equal, ratio_double)
+      break
     case 'indigo': //靛蓝色系
-      ret = `rgb(${rand(16, 1, 3)},${rand(16, 7, 10)},${rand(16, 9, 12)})`;
-      break;
+      ret = `rgb(${rand(16, 1, 3)},${rand(16, 7, 10)},${rand(16, 9, 12)})`
+      break
   }
   // console.log(type, ret);
-  return ret;
+  return ret
 }
 
 /**
@@ -104,7 +104,7 @@ function randType(type) {
  * @returns n^2
  */
 function sqr(n) {
-  return n ** 2;
+  return n ** 2
 }
 /**
  *n1和n2的平方和
@@ -113,7 +113,7 @@ function sqr(n) {
  * @returns n1^2+n2^2
  */
 function sqr2(n1, n2) {
-  return sqr(n1) + sqr(n2);
+  return sqr(n1) + sqr(n2)
 }
 /**
  *p1和p2的距离平方
@@ -122,7 +122,7 @@ function sqr2(n1, n2) {
  * @returns sqr2(p2.y - p1.y, p2.x - p1.x)
  */
 function sqr2p(p1, p2) {
-  return sqr2(p2.y - p1.y, p2.x - p1.x);
+  return sqr2(p2.y - p1.y, p2.x - p1.x)
 }
 /**
  *n的平方根
@@ -130,7 +130,7 @@ function sqr2p(p1, p2) {
  * @returns n平方根
  */
 function sqrt(n) {
-  return Math.sqrt(n);
+  return Math.sqrt(n)
 }
 /**
  *n1和n2平方和的平方根
@@ -139,7 +139,7 @@ function sqrt(n) {
  * @returns sqrt(sqr2(n1, n2))
  */
 function sqrt2(n1, n2) {
-  return sqrt(sqr2(n1, n2));
+  return sqrt(sqr2(n1, n2))
 }
 /**
  *p1和p2的距离
@@ -148,7 +148,7 @@ function sqrt2(n1, n2) {
  * @returns sqrt2(p2.y - p1.y, p2.x - p1.x)
  */
 function sqrt2p(p1, p2) {
-  return sqrt2(p2.y - p1.y, p2.x - p1.x);
+  return sqrt2(p2.y - p1.y, p2.x - p1.x)
 }
 /**
  *n的绝对值
@@ -156,7 +156,7 @@ function sqrt2p(p1, p2) {
  * @returns |n|
  */
 function abs(n) {
-  return Math.abs(n);
+  return Math.abs(n)
 }
 /**
  *n2对n1的绝对差
@@ -165,7 +165,7 @@ function abs(n) {
  * @returns |n1-n2|
  */
 function abs2(n1, n2) {
-  return abs(n2 - n1);
+  return abs(n2 - n1)
 }
 //三角函数系统是按顺时针解析，原因是屏幕的y轴向下
 /**
@@ -174,7 +174,7 @@ function abs2(n1, n2) {
  * @returns sin(theta)
  */
 function sin(theta) {
-  return Math.sin(theta);
+  return Math.sin(theta)
 }
 /**
  *坐标(x,y)相对(0,0)角的sin值
@@ -183,7 +183,7 @@ function sin(theta) {
  * @returns y / sqrt2(y, x)
  */
 function sin2(y, x) {
-  return y / sqrt2(y, x);
+  return y / sqrt2(y, x)
 }
 /**
  *点2对点1角的sin值
@@ -192,7 +192,7 @@ function sin2(y, x) {
  * @returns sin2(p2.y - p1.y, p2.x - p1.x)
  */
 function sin2p(p1, p2) {
-  return sin2(p2.y - p1.y, p2.x - p1.x);
+  return sin2(p2.y - p1.y, p2.x - p1.x)
 }
 /**
  *余弦值
@@ -200,7 +200,7 @@ function sin2p(p1, p2) {
  * @returns cos(theta)
  */
 function cos(theta) {
-  return Math.cos(theta);
+  return Math.cos(theta)
 }
 /**
  *坐标(x,y)相对(0,0)角的cos值
@@ -209,7 +209,7 @@ function cos(theta) {
  * @returns x / sqrt2(y, x)
  */
 function cos2(y, x) {
-  return x / sqrt2(y, x);
+  return x / sqrt2(y, x)
 }
 /**
  *点2对点1角的cos值
@@ -218,7 +218,7 @@ function cos2(y, x) {
  * @returns cos2(p2.y - p1.y, p2.x - p1.x)
  */
 function cos2p(p1, p2) {
-  return cos2(p2.y - p1.y, p2.x - p1.x);
+  return cos2(p2.y - p1.y, p2.x - p1.x)
 }
 /**
  *正切值
@@ -226,7 +226,7 @@ function cos2p(p1, p2) {
  * @returns tan(theta)
  */
 function tan(theta) {
-  return Math.tan(theta);
+  return Math.tan(theta)
 }
 /**
  *坐标(x,y)相对(0,0)角的tan值
@@ -235,7 +235,7 @@ function tan(theta) {
  * @returns y / x
  */
 function tan2(y, x) {
-  return y / x;
+  return y / x
 }
 /**
  *点2对点1角的tan值
@@ -244,7 +244,7 @@ function tan2(y, x) {
  * @returns tan2(p2.y - p1.y, p2.x - p1.x)
  */
 function tan2p(p1, p2) {
-  return tan2(p2.y - p1.y, p2.x - p1.x);
+  return tan2(p2.y - p1.y, p2.x - p1.x)
 }
 /**
  *正切角
@@ -252,7 +252,7 @@ function tan2p(p1, p2) {
  * @returns arctan(n)
  */
 function atan(n) {
-  return Math.atan(n);
+  return Math.atan(n)
 }
 /**
  *坐标(x,y)相对x轴的角度
@@ -261,7 +261,7 @@ function atan(n) {
  * @returns arctan(y/x)
  */
 function atan2(y, x) {
-  return Math.atan2(y, x);
+  return Math.atan2(y, x)
 }
 /**
  *点2相对点1与x轴的夹角
@@ -270,7 +270,7 @@ function atan2(y, x) {
  * @returns (p2.y - p1.y, p2.x - p1.x)
  */
 function atan2p(p1, p2) {
-  return atan2(p2.y - p1.y, p2.x - p1.x);
+  return atan2(p2.y - p1.y, p2.x - p1.x)
 }
 
 /**
@@ -279,9 +279,9 @@ function atan2p(p1, p2) {
  * @param {*} b 基础量2
  */
 function swap(a, b) {
-  let t = a;
-  a = b;
-  b = t;
+  let t = a
+  a = b
+  b = t
 }
 
 //功能类
@@ -301,7 +301,7 @@ function swap(a, b) {
  * @param {string} url 路径
  */
 function _2URL(url) {
-  window.location.href = url;
+  window.location.href = url
 }
 
 /**
@@ -309,7 +309,7 @@ function _2URL(url) {
  * @param {string} route 路由
  */
 function _2Route(route) {
-  _2URL(getPath('page', route));
+  _2URL(getPath('page', route))
 }
 
 /**
@@ -318,7 +318,7 @@ function _2Route(route) {
  * @param {number} time 时延，单位ms
  */
 function Dlay2URL(url, time) {
-  setTimeout(`window.location.href = ${url}`, time);
+  setTimeout(`window.location.href = ${url}`, time)
 }
 
 /**
@@ -327,7 +327,7 @@ function Dlay2URL(url, time) {
  * @param {number} time 时延，单位ms
  */
 function DlayRoute(route, time) {
-  Dlay2URL(getPath('page', route), time);
+  Dlay2URL(getPath('page', route), time)
 }
 
 /**
@@ -336,23 +336,23 @@ function DlayRoute(route, time) {
  * @returns 对应类型的放缩系数
  */
 function ZoomRatio(type) {
-  let ret;
+  let ret
   switch (type) {
     case 'w':
-      ret = ratio_w;
-      break;
+      ret = ratio_w
+      break
     case 'h':
-      ret = ratio_h;
-      break;
+      ret = ratio_h
+      break
     //由于线条放缩受角度因素影响较大，比较难以拟合，此处简化处理，和面体放缩放在一起
     case 'line':
     case 'area':
     case 'ball':
     case 'circle':
-      ret = ratio_w * ratio_h;
-      break;
+      ret = ratio_w * ratio_h
+      break
   }
-  return ret;
+  return ret
 }
 
 /**
@@ -362,8 +362,8 @@ function ZoomRatio(type) {
  */
 function smoothScrollTo(targetPosition, duration) {
   if (!scrolling) {
-    scrolling = true;
-    _smoothScrollTo(targetPosition, duration);
+    scrolling = true
+    _smoothScrollTo(targetPosition, duration)
   }
 }
 /**
@@ -374,50 +374,48 @@ function smoothScrollTo(targetPosition, duration) {
 function _smoothScrollTo(targetPosition, duration) {
   let startPosition = window.pageYOffset,
     distance = targetPosition - startPosition,
-    startTime = null;
+    startTime = null
 
   function scrollAnimation(currentTime) {
-    if (!startTime) startTime = currentTime;
+    if (!startTime) startTime = currentTime
 
     let elapsed = currentTime - startTime,
       ease = Math.easeInOut(elapsed, duration),
-      scrollPosition = startPosition + distance * ease;
-    window.scrollTo(0, scrollPosition);
+      scrollPosition = startPosition + distance * ease
+    window.scrollTo(0, scrollPosition)
 
-    if (elapsed <= duration) requestAnimationFrame(scrollAnimation);
-    else scrolling = false;
+    if (elapsed <= duration) requestAnimationFrame(scrollAnimation)
+    else scrolling = false
   }
   //过渡曲线
   Math.easeInOut = (t, duration) => {
-    t /= duration / 2;
-    if (t < 1) return 0.5 * t * t;
-    t--;
-    return -0.5 * (t * (t - 2) - 1);
-  };
-  requestAnimationFrame(scrollAnimation);
+    t /= duration / 2
+    if (t < 1) return 0.5 * t * t
+    t--
+    return -0.5 * (t * (t - 2) - 1)
+  }
+  requestAnimationFrame(scrollAnimation)
 }
 
 //核心过渡曲线
 function coreTop() {
-  let ratio = 0.75;
-  return scrollTop <= base_height
-    ? scrollTop * ratio
-    : scrollTop - base_height * (1 - ratio);
+  let ratio = 0.75
+  return scrollTop <= base_height ? scrollTop * ratio : scrollTop - base_height * (1 - ratio)
 }
 //纵轴角标
 function indexUpdate(delta) {
-  INDEX = scrollTop / base_height;
-  let rIndex = round(INDEX);
+  INDEX = scrollTop / base_height
+  let rIndex = round(INDEX)
   //基量不准，增加ZERO辅助计算
-  if (abs2(INDEX, rIndex) < ZERO) INDEX = rIndex;
+  if (abs2(INDEX, rIndex) < ZERO) INDEX = rIndex
   // console.log('former', INDEX);
-  if (delta < 0) INDEX = max(0, ceil(INDEX) - 1);
-  else INDEX = min(panel_count - 1, floor(INDEX) + 1);
+  if (delta < 0) INDEX = max(0, ceil(INDEX) - 1)
+  else INDEX = min(panel_count - 1, floor(INDEX) + 1)
   // console.log('latter', INDEX);
 }
 
 // 保存原始的 split 方法
-const originalSplit = String.prototype.split;
+const originalSplit = String.prototype.split
 /**
  * 重写字符串split 方法，去除空字符
  * @param {string|RegExp} separator 分隔符
@@ -426,11 +424,11 @@ const originalSplit = String.prototype.split;
  */
 String.prototype.split = function (separator, limit) {
   // 调用原始的 split 方法
-  if (this.indexOf(separator) === -1) return [];
-  const result = originalSplit.call(this, separator, limit);
+  if (this.indexOf(separator) === -1) return []
+  const result = originalSplit.call(this, separator, limit)
   // 过滤掉空字符
-  return result.filter(item => item !== '');
-};
+  return result.filter(item => item !== '')
+}
 
 /**
  * 设置背景图
@@ -439,11 +437,11 @@ String.prototype.split = function (separator, limit) {
  */
 function setBGI(id, fname) {
   // console.log(fname, assets[0].fname);
-  let obj = assets.find(item => item.fname === fname);
+  let obj = assets.find(item => item.fname === fname)
   // console.log(obj);
-  let url = `url(\'${obj.path}\')`;
+  let url = `url(\'${obj.path}\')`
   // console.log(obj);
-  id.style.backgroundImage = url;
+  id.style.backgroundImage = url
 }
 
 /**
@@ -451,48 +449,47 @@ function setBGI(id, fname) {
  * @param {string} text 指令
  */
 function TryEXE(text) {
-  if (!text) return ''; //空文本直接返回
-  REQUEST.add(text);
+  if (!text) return '' //空文本直接返回
+  REQUEST.add(text)
   let tmp,
-    ret = typeEXE('Base', text);
-  if (ret !== 'Base') return $dt('t') + ret;
-  else ret = '';
+    ret = typeEXE('Base', text)
+  if (ret !== 'Base') return $dt('t') + ret
+  else ret = ''
   if (!deb_cmd) {
-    tmp = typeEXE('!CMD', text);
-    if (tmp === '!CMD') tmp = 'normal text: ' + text;
+    tmp = typeEXE('!CMD', text)
+    if (tmp === '!CMD') tmp = 'normal text: ' + text
   } else {
-    tmp = typeEXE('CMD', text);
-    if (tmp === 'CMD') tmp = 'invalid command: ' + text;
+    tmp = typeEXE('CMD', text)
+    if (tmp === 'CMD') tmp = 'invalid command: ' + text
   }
-  ret += tmp;
+  ret += tmp
   // console.log('tag', ret);
-  return $dt('t') + ret;
+  return $dt('t') + ret
 }
 
 //按类型执行
 function typeEXE(type, text) {
   let set = CONFIG.KEYSET[type],
     tag = set.tag,
-    gap = set.prefix;
+    gap = set.prefix
   switch (type) {
     case 'Base':
     case '!CMD':
-      let sptext = text.split(gap);
-      text = sptext.pop() || '';
+      let sptext = text.split(gap)
+      text = sptext.pop() || ''
       if (type === 'Base' && ['e', 'esc', 'escape'].includes(text))
-        search_ipt.value = sptext.toString().replaceAll(',', gap);
-      break;
+        search_ipt.value = sptext.toString().replaceAll(',', gap)
+      break
     case 'CMD':
-      break;
+      break
   }
-  let ktem =
-    set.keys.find(item => item.key.includes(text.toLowerCase())) || null;
-  if (!ktem) return type;
+  let ktem = set.keys.find(item => item.key.includes(text.toLowerCase())) || null
+  if (!ktem) return type
   // console.log(text);
-  if (type != 'Base') _c();
-  let ret = window[`${tag}${ktem.key[0]}`]();
+  if (type != 'Base') _c()
+  let ret = window[`${tag}${ktem.key[0]}`]()
   // console.log(ktem.info[1] || ret);
-  return ktem.info[1] || ret;
+  return ktem.info[1] || ret
 }
 
 //-----------------非指令模式、普通模式
@@ -501,26 +498,26 @@ function typeEXE(type, text) {
  * 开启指令模式
  */
 function cmd() {
-  if (deb_cmd) return;
-  deb_cmd = true;
-  setBGI(search_btn, 'cmd.svg');
-  search_btn.style.cursor = 'default';
-  search_ipt.placeholder = sign_cmd;
-  _c();
+  if (deb_cmd) return
+  deb_cmd = true
+  setBGI(search_btn, 'cmd.svg')
+  search_btn.style.cursor = 'default'
+  search_ipt.placeholder = sign_cmd
+  _c()
   // console.log(deb_cmd);
 }
 /**
  * 清空输入文本
  */
 function _c() {
-  search_ipt.value = '';
+  search_ipt.value = ''
 }
 /**
  * 输入框退焦
  */
 function _e() {
   //失焦必须挂钩keyup事件
-  search_ipt.blur();
+  search_ipt.blur()
 }
 
 //------------------------指令模式
@@ -531,20 +528,20 @@ function _e() {
  * 关闭指令模式
  */
 var $e = ($q = () => {
-  deb_cmd = false;
-  setBGI(search_btn, 'search.svg');
-  search_btn.style.cursor = 'pointer';
-  search_ipt.placeholder = sign_ques;
+  deb_cmd = false
+  setBGI(search_btn, 'search.svg')
+  search_btn.style.cursor = 'pointer'
+  search_ipt.placeholder = sign_ques
   // console.log(deb_cmd);
-});
+})
 /**
  * 查看版本
  * @returns 版本号
  */
 function $v() {
-  let ver = `version: ${CONFIG.VERSION}`;
+  let ver = `version: ${CONFIG.VERSION}`
   // console.log(ver);
-  return ver;
+  return ver
 }
 /**
  * 获取帮助
@@ -556,25 +553,21 @@ function $h() {
     gapText = '| ',
     len1 = 15,
     len2 = 25 - gapText.length,
-    tableText = `\n${subkeys[0]
-      .toUpperCase()
-      .padEnd(len1)}${gapText}${subkeys[1].toUpperCase().padEnd(len2)}\n`,
-    rowText = '';
-  tableText += '—'.repeat(tableText.length) + '\n';
+    tableText = `\n${subkeys[0].toUpperCase().padEnd(len1)}${gapText}${subkeys[1].toUpperCase().padEnd(len2)}\n`,
+    rowText = ''
+  tableText += '—'.repeat(tableText.length) + '\n'
   keys.forEach(item => {
-    rowText = `${item.key
-      .toString()
-      .padEnd(len1)}${gapText}${item.info[0].padEnd(len2)}\n`;
-    tableText += rowText;
-  });
-  // console.log(tableText);
-  return tableText;
+    rowText = `${item.key.toString().padEnd(len1)}${gapText}${item.info[0].padEnd(len2)}\n`
+    tableText += rowText
+  })
+  // console.log(tableText)
+  return tableText
 }
 /**
  * 刷新页面
  */
 function $rf() {
-  location.reload();
+  location.reload()
 }
 /**
  * 重载资源
@@ -584,19 +577,19 @@ function $rl() {}
  * 滑动至顶部
  */
 function $top() {
-  smoothScrollTo(panels[0].offsetTop, duration);
+  smoothScrollTo(panels[0].offsetTop, duration)
 }
 /**
  * 滑动至底部
  */
 function $btm() {
-  smoothScrollTo(panels[panel_count - 1].offsetTop, duration);
+  smoothScrollTo(panels[panel_count - 1].offsetTop, duration)
 }
 /**
  * 清空输入历史
  */
 function $cls() {
-  HISTORY = [];
+  HISTORY = []
 }
 /**
  * 启动游戏
@@ -609,14 +602,14 @@ function $g() {}
  */
 function $dt(type) {
   let tmpdate,
-    date = new Date();
+    date = new Date()
   switch (type) {
     case 't':
-      tmpdate = date.toLocaleTimeString();
-      break;
+      tmpdate = date.toLocaleTimeString()
+      break
     default:
-      tmpdate = date.toLocaleDateString();
-      break;
+      tmpdate = date.toLocaleDateString()
+      break
   }
-  return tmpdate + '  ';
+  return tmpdate + '  '
 }

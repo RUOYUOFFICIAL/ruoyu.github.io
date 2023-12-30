@@ -273,6 +273,7 @@ search_ipt.onkeyup = ev => {
     case 'Enter':
       if (ipt_Actived) {
         let ipt_text = TryEXE(search_ipt.value);
+        console.log(ipt_text);
         if (ipt_text) HISTORY.push(ipt_text);
         // console.log(HISTORY);
       }
